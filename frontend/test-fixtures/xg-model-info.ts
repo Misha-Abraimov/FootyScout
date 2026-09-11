@@ -1,0 +1,73 @@
+import type { ModelMetrics, XGModelInfoResponse } from "@/lib/types";
+
+const metrics: ModelMetrics = {
+  roc_auc: 0.75,
+  log_loss: 0.27,
+  brier_score: 0.076,
+  accuracy: 0.907,
+  expected_calibration_error: 0.01,
+};
+
+export const xgModelInfoFixture: XGModelInfoResponse = {
+  task_name: "Expected goals",
+  selected_model: "xgboost",
+  feature_columns: ["shot_x", "distance_to_goal", "body_part"],
+  dataset: {
+    matches: 233,
+    shots: 5784,
+    goals: 685,
+    penalties: 239,
+    penalty_shootout_shots: 164,
+    eligible_non_penalty_shots: 5545,
+    eligible_non_penalty_goals: 513,
+    corpus: [{ competition_id: 9, season_id: 281, matches: 34, shots: 916, goals: 110 }],
+  },
+  preprocessing: {
+    numeric: "median",
+    boolean: "false flags",
+    categorical: "Unknown and one-hot",
+    evaluation_fit_split: "training matches only",
+    oof_fit_policy: "per fold",
+    encoded_feature_count: 31,
+  },
+  split_methodology: {
+    method: "grouped by match",
+    random_seed: 42,
+    train: { match_count: 186, shot_count: 4458, goal_count: 414, goal_rate: 0.093 },
+    validation: { match_count: 23, shot_count: 543, goal_count: 52, goal_rate: 0.096 },
+    test: { match_count: 24, shot_count: 544, goal_count: 47, goal_rate: 0.086 },
+  },
+  selection: {
+    primary_metric: "validation_log_loss",
+    secondary_metrics: ["brier_score"],
+    reason: "lowest validation log loss",
+    test_metrics_used: false,
+  },
+  validation_metrics: { selected_effective: { ...metrics, log_loss: 0.2859 } },
+  untouched_test_metrics: { selected_effective: { ...metrics, log_loss: 0.2507 } },
+  out_of_fold_metrics: metrics,
+  calibration: {
+    method: "temperature_scaling_on_raw_margin",
+    fit_split: "validation",
+    temperature: 0.9943,
+    retained: false,
+    retention_rule: "material improvements required",
+    reason: "not retained",
+    uncalibrated_validation_metrics: metrics,
+    calibrated_validation_metrics: metrics,
+  },
+  selected_parameters: { max_depth: 2 },
+  selected_boosting_rounds: 50,
+  oof: {
+    fold_count: 5,
+    prediction_count: 5545,
+    unique_shots: 5545,
+    missing_predictions: 0,
+    duplicate_shots: 0,
+    probability_min: 0.02,
+    probability_max: 0.7,
+    group_integrity: true,
+  },
+  penalty_policy: "penalties excluded",
+  feature_importance: [{ feature: "angle_to_goal", gain: 22, normalized_gain: 0.2 }],
+};

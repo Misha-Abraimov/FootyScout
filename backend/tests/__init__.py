@@ -1,0 +1,1 @@
+"""FootyScout backend test suite."""

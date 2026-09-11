@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #070707;
+  --panel: #101715;
+  --panel-raised: #151e1b;
+  --foreground: #edf3f0;
+  --muted: #92a19b;
+  --border: #25312d;
+  --accent: #74d6a2;
+  --accent-strong: #9aebbd;
+  --negative: #ff8f86;
+  --warning: #edc777;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--background);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Segoe UI Variable", "Segoe UI", Inter, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a,
+button,
+input,
+select {
+  outline-color: var(--accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(116, 214, 162, 0.28);
+}
+
+.data-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.metric-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.campos-frame svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

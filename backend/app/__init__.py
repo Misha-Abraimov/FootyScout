@@ -1,0 +1,1 @@
+"""FootyScout API package."""
