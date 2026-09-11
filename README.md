@@ -108,7 +108,7 @@ PyTorch remains meaningful as the evaluated xPass MLP benchmark; XGBoost is the 
 ### Prerequisites
 
 - Python 3.12
-- Node.js 20.9 or newer and npm
+- Node.js 22.22.2 or newer and npm
 - Docker Desktop or Docker Engine with Docker Compose
 
 ### 1. Clone and configure

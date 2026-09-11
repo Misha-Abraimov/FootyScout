@@ -10,7 +10,7 @@
     "test": "vitest run"
   },
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.22.2"
   },
   "dependencies": {
     "@withqwerty/campos-react": "^0.1.0-beta.4",
