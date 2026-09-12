@@ -30,6 +30,8 @@ type QueryValue = string | number | boolean | null | undefined;
 
 export type ApiRuntime = {
   publicApiUrl?: string;
+  vercelEnv?: string;
+  vercelProjectProductionUrl?: string;
   vercelUrl?: string;
   browserOrigin?: string;
 };
@@ -37,6 +39,8 @@ export type ApiRuntime = {
 function currentApiRuntime(): ApiRuntime {
   return {
     publicApiUrl: process.env.NEXT_PUBLIC_API_URL,
+    vercelEnv: process.env.VERCEL_ENV,
+    vercelProjectProductionUrl: process.env.VERCEL_PROJECT_PRODUCTION_URL,
     vercelUrl: process.env.VERCEL_URL,
     browserOrigin: typeof window === "undefined" ? undefined : window.location.origin,
   };
@@ -51,6 +55,12 @@ export function resolveApiBaseUrl(runtime: ApiRuntime): string {
   const browserOrigin = runtime.browserOrigin?.trim();
   if (browserOrigin) {
     return browserOrigin.replace(/\/$/, "");
+  }
+
+  const productionUrl = runtime.vercelProjectProductionUrl?.trim();
+  if (runtime.vercelEnv === "production" && productionUrl) {
+    const hostname = productionUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    return `https://${hostname}`;
   }
 
   const vercelUrl = runtime.vercelUrl?.trim();

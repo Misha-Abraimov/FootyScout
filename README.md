@@ -198,8 +198,9 @@ the serverless bundle.
    same-origin, so no wildcard CORS setting is required; if an additional external
    browser origin must call the API, set `CORS_ORIGINS` to an explicit JSON list of
    trusted origins.
-5. Leave `NEXT_PUBLIC_API_URL` unset in Vercel. `VERCEL_URL` is supplied by Vercel
-   and is used only for server-rendered same-deployment requests.
+5. Leave `NEXT_PUBLIC_API_URL` unset in Vercel. Production server rendering uses
+   Vercel's canonical `VERCEL_PROJECT_PRODUCTION_URL`; `VERCEL_URL` remains a
+   fallback for other deployment environments.
 6. Apply Alembic migrations and load the validated snapshot into the hosted
    database from a trusted environment before the first production smoke test:
 

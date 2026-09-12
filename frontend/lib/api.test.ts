@@ -23,7 +23,17 @@ describe("API URL construction", () => {
     expect(url).toBe("/api/players?search=Xhaka");
   });
 
-  it("uses the Vercel deployment URL for server-rendered API requests", () => {
+  it("prefers the canonical project URL for production server-rendered requests", () => {
+    expect(
+      resolveApiBaseUrl({
+        vercelEnv: "production",
+        vercelProjectProductionUrl: "footy-scout.vercel.app",
+        vercelUrl: "footy-scout-deployment-id-mishka3.vercel.app",
+      }),
+    ).toBe("https://footy-scout.vercel.app");
+  });
+
+  it("uses the deployment URL as the server-rendered fallback", () => {
     expect(resolveApiBaseUrl({ vercelUrl: "footyscout-git-main.example.vercel.app" })).toBe(
       "https://footyscout-git-main.example.vercel.app",
     );
@@ -33,6 +43,8 @@ describe("API URL construction", () => {
     expect(
       resolveApiBaseUrl({
         publicApiUrl: "http://localhost:8000/",
+        vercelEnv: "production",
+        vercelProjectProductionUrl: "footy-scout.vercel.app",
         vercelUrl: "footyscout.example.vercel.app",
       }),
     ).toBe("http://localhost:8000");
