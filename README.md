@@ -1,6 +1,6 @@
 # FootyScout
 
-FootyScout is a full-stack football scouting and analytics platform that uses event-level match data to model pass difficulty, expected goals, attacking action value, player style, team roles, and scouting fit. Its production analytics are precomputed into reproducible Parquet/model artifacts, loaded into PostgreSQL, exposed through FastAPI, and presented in a responsive Next.js interface.
+FootyScout is a football scouting and analytics platform that uses event-level match data to model pass difficulty, expected goals, attacking action value, player style, team roles, and scouting fit. Its production analytics are precomputed into reproducible Parquet/model artifacts, loaded into PostgreSQL, exposed through FastAPI, and presented in a responsive Next.js interface.
 
 FootyScout is an analytical scouting aid. It is not an LLM application, transfer-success predictor, or player-quality oracle.
 
