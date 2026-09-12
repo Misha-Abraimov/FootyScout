@@ -38,7 +38,7 @@ export default async function Home() {
           <div className="mx-auto max-w-7xl">
             <p className="text-xs font-semibold tracking-[0.2em] text-[var(--accent)] uppercase">Player intelligence for scouting</p>
             <h1 className="mt-5 max-w-5xl text-4xl leading-[1.03] font-semibold tracking-[-0.05em] text-balance sm:text-6xl lg:text-7xl">Scout players beyond traditional statistics.</h1>
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-[var(--muted)]">FootyScout models pass difficulty, expected goals, attacking impact, and player style to build profiles, identify archetypes and similar players, analyze Team Intelligence, and surface Role Fit scouting recommendations.</p>
+            <p className="mt-7 max-w-3xl text-lg leading-8 text-[var(--muted)]">FootyScout analyzes pass difficulty, expected goals, attacking impact, and player style to build profiles, identify archetypes and similar players, understand team intelligence, and generate scouting recommendations.</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/players" className="rounded-lg bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[#07110d] hover:bg-[var(--accent-strong)]">Explore players</Link>
               <Link href="/archetypes" className="rounded-lg border border-[var(--border)] bg-[var(--panel)] px-5 py-3 text-sm font-semibold hover:bg-[var(--panel-raised)]">View archetypes</Link>

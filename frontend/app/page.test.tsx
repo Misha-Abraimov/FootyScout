@@ -40,14 +40,14 @@ describe("homepage", () => {
     render(await Home());
 
     expect(screen.getByText("Player intelligence for scouting")).toBeTruthy();
-    expect(screen.getByText(/FootyScout models pass difficulty/)).toBeTruthy();
+    expect(screen.getByText(/FootyScout analyzes pass difficulty/)).toBeTruthy();
     expect(
       screen.getByRole("heading", {
         name: "Scout players beyond traditional statistics.",
       }),
     ).toBeTruthy();
-    expect(screen.getByText(/models pass difficulty, expected goals, attacking impact/)).toBeTruthy();
-    expect(screen.getByText(/analyze Team Intelligence, and surface Role Fit scouting recommendations/)).toBeTruthy();
+    expect(screen.getByText(/analyzes pass difficulty, expected goals, attacking impact/)).toBeTruthy();
+    expect(screen.getByText(/understand team intelligence, and generate scouting recommendations/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Explore players" }).getAttribute("href")).toBe("/players");
     expect(screen.getByRole("link", { name: "View archetypes" }).getAttribute("href")).toBe("/archetypes");
     expect(screen.getByRole("link", { name: /Read methodology/ }).getAttribute("href")).toBe("/model");
