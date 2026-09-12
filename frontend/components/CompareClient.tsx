@@ -143,7 +143,7 @@ export function PositionPercentiles({ left, right, sameGroup }: { left: PlayerIn
         {preferred.map((name) => {
           const first = leftByName.get(name);
           const second = rightByName.get(name);
-          const label = displayMetricLabel(first?.label ?? second?.label ?? name, "table");
+          const label = displayMetricLabel(first?.label ?? second?.label ?? name);
           return (
             <div key={name} className="grid grid-cols-[minmax(130px,1fr)_minmax(100px,0.7fr)_minmax(100px,0.7fr)] border-t border-[var(--border)] px-4 py-3 text-sm">
               <span>{label}</span>

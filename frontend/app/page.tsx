@@ -95,7 +95,7 @@ export default async function Home() {
 
           <section aria-labelledby="leaderboard-preview-heading">
             <div className="mb-6 flex items-end justify-between gap-4">
-              <div><p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Reliable samples</p><h2 id="leaderboard-preview-heading" className="mt-2 text-2xl font-semibold">Actual vs. expected</h2></div>
+              <div><p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Reliable samples</p><h2 id="leaderboard-preview-heading" className="mt-2 text-2xl font-semibold">Actual vs. expected passing</h2></div>
               <Link href="/leaderboard" className="text-sm font-semibold text-[var(--accent-strong)] hover:underline">Full leaderboard →</Link>
             </div>
             <LeaderboardTable entries={leaderboard.items} />

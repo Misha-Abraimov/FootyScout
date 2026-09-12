@@ -5,7 +5,7 @@ import { formatCount, formatDecimal, formatPercent, formatPercentagePoints } fro
 import type { LeaderboardEntry, LeaderboardMetric } from "@/lib/types";
 
 export const leaderboardLabels: Record<LeaderboardMetric, string> = {
-  completion_above_expected_pp: "Actual vs. expected",
+  completion_above_expected_pp: "Actual vs. expected passing",
   pressure_above_expected_pp: "Under-pressure above expected",
   progressive_above_expected_pp: "Progressive above expected",
   long_pass_above_expected_pp: "Long-pass above expected",
