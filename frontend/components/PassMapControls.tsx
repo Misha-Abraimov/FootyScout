@@ -32,7 +32,7 @@ export function PassMapControls({
         </div>
       </fieldset>
       <label className="grid gap-2 text-xs text-[var(--muted)]">
-        Expected-completion difficulty <span className="sr-only">filter</span>
+        Pass difficulty <span className="sr-only">filter</span>
         <select value={difficulty} disabled={disabled} onChange={(event) => onDifficultyChange(event.target.value as DifficultyFilter)} className="min-w-56 rounded-lg border border-[var(--border)] bg-[#0a100e] px-3 py-2.5 text-sm text-white">
           <option value="all">All difficulty</option>
           <option value="difficult">Difficult (&lt; 60%)</option>

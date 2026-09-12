@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { formatCount, formatDecimal, formatPercent } from "@/lib/format";
+import { displayMetricLabel } from "@/lib/terminology";
 import type { TeamRoleDimension, TeamRoleResponse } from "@/lib/types";
 
 function rawValue(dimension: TeamRoleDimension): string {
@@ -37,13 +38,14 @@ export function TeamRoleProfile({ role, compact = false }: { role: TeamRoleRespo
         {role.dimensions.map((dimension) => {
           const width = Math.min(50, Math.abs(dimension.position_z) * 18);
           const positive = dimension.position_z >= 0;
+          const label = displayMetricLabel(dimension.label);
           return (
             <div key={dimension.feature_name} className="rounded-xl border border-[var(--border)] bg-black/15 p-4">
               <div className="flex items-baseline justify-between gap-3">
-                <span className="text-sm font-medium">{dimension.label}</span>
+                <span className="text-sm font-medium">{label}</span>
                 <span className="metric-tabular text-sm text-[var(--muted)]">{rawValue(dimension)} · z {dimension.position_z >= 0 ? "+" : ""}{formatDecimal(dimension.position_z, 2)}</span>
               </div>
-              <div aria-label={`${dimension.label}: ${formatDecimal(dimension.position_z, 2)} position-relative z-score`} className="relative mt-3 h-2 rounded-full bg-white/8">
+              <div aria-label={`${label}: ${formatDecimal(dimension.position_z, 2)} position-relative z-score`} className="relative mt-3 h-2 rounded-full bg-white/8">
                 <span className="absolute inset-y-0 left-1/2 w-px bg-white/30" />
                 <span
                   className="absolute inset-y-0 rounded-full bg-[var(--accent)]"

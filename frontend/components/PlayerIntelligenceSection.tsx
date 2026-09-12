@@ -10,6 +10,7 @@ import {
 } from "@/lib/format";
 import type { PlayerIntelligenceMetric, PlayerIntelligenceResponse } from "@/lib/types";
 import { PlayerArchetypeCard } from "@/components/PlayerArchetypeCard";
+import { displayMetricLabel } from "@/lib/terminology";
 
 function rawValue(metric: PlayerIntelligenceMetric): string {
   if (metric.raw_value === null) return "—";
@@ -23,7 +24,7 @@ function rawValue(metric: PlayerIntelligenceMetric): string {
 
 export function PlayerIntelligenceSection({ profile }: { profile: PlayerIntelligenceResponse }) {
   const radarRows = profile.radar_metrics.map((metric) => ({
-    metric: metric.label,
+    metric: displayMetricLabel(metric.label),
     value: metric.percentile ?? 0,
     percentile: metric.percentile ?? undefined,
     category: metric.family === "style" ? "Style" : "Performance",
@@ -80,7 +81,7 @@ function MetricGroup({ title, note, metrics }: { title: string; note: string; me
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {metrics.map((metric) => (
           <article key={metric.metric_name} className="rounded-lg border border-[var(--border)] bg-black/15 p-3">
-            <p className="text-sm font-medium">{metric.label}</p>
+            <p className="text-sm font-medium">{displayMetricLabel(metric.label)}</p>
             <p className="metric-tabular mt-2 text-lg font-semibold">{rawValue(metric)}</p>
             <p className={metric.percentile === null ? "mt-1 text-xs text-[var(--muted)]" : "mt-1 text-xs text-[var(--accent-strong)]"}>
               {formatPercentile(metric.percentile)} among {metric.peer_position_group} players

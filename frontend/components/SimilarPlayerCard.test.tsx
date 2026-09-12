@@ -39,6 +39,7 @@ describe("SimilarPlayerCard", () => {
     render(<SimilarPlayerCard player={player} />);
 
     expect(screen.getByText("Example Midfielder")).toBeTruthy();
+    expect(screen.getByText("Style similarity")).toBeTruthy();
     expect(screen.getByText("79.7 / 100")).toBeTruthy();
     expect(screen.getByText(/Sample support: Limited/)).toBeTruthy();
     expect(screen.getByText("Observed: 33 vs 2 matches")).toBeTruthy();

@@ -101,7 +101,7 @@ describe("FootyScoutPassMap interactions", () => {
 
     await user.click(screen.getByRole("button", { name: "Progressive" }));
     await waitFor(() => expect(mocks.getPlayerPasses).toHaveBeenCalledTimes(1));
-    await user.selectOptions(screen.getByLabelText(/Expected-completion difficulty/), "difficult");
+    await user.selectOptions(screen.getByLabelText(/Pass difficulty/), "difficult");
 
     await waitFor(() => expect(mocks.getPlayerPasses).toHaveBeenCalledTimes(2));
     expect(mocks.getPlayerPasses.mock.calls[1]?.[1]).toEqual({
@@ -143,7 +143,7 @@ describe("FootyScoutPassMap interactions", () => {
     expect(selector.value).toBe("27");
     expect(selector.selectedOptions[0]?.textContent).toContain("Pass #27");
     expect(selector.selectedOptions[0]?.textContent).toContain("xPass 84.8%");
-    expect(screen.getByText("Expected completion").parentElement?.textContent).toContain("84.8%");
+    expect(screen.getByText("Pass difficulty", { selector: "dt" }).parentElement?.textContent).toContain("84.8%");
   });
 
   it("clears the inspector and shows an empty state for an empty filtered response", async () => {

@@ -10,7 +10,7 @@ export function AttackingValueSection({ profile }: { profile: AttackingProfileRe
     <section aria-labelledby="attacking-value-title">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Attacking value</p>
+          <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Attacking impact</p>
           <h2 id="attacking-value-title" className="mt-2 text-2xl font-semibold">Possession value added</h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">Held-out model estimate of V(after) − V(before). This is observational possession value, not causal impact or pass-success probability.</p>
         </div>

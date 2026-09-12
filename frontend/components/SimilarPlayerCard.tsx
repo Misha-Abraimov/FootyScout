@@ -13,7 +13,10 @@ export function SimilarPlayerCard({ player }: { player: SimilarPlayerResponse })
           <Link href={`/players/${player.similar_player_id}`} className="mt-2 block text-lg font-semibold hover:text-[var(--accent-strong)]">{player.similar_player_name}</Link>
           <p className="mt-1 text-sm text-[var(--muted)]">{player.similar_team_name} · {player.similar_position}</p>
         </div>
-        <p className="metric-tabular shrink-0 text-lg font-semibold text-[var(--accent-strong)]">{formatSimilarity(player.similarity_score)}</p>
+        <div className="shrink-0 text-right">
+          <p className="text-[10px] tracking-wide text-[var(--muted)] uppercase">Style similarity</p>
+          <p className="metric-tabular mt-1 text-lg font-semibold text-[var(--accent-strong)]">{formatSimilarity(player.similarity_score)}</p>
+        </div>
       </div>
       <div className="mt-5 flex flex-wrap gap-2" aria-label="Closest style dimensions">
         {player.closest_style_dimensions.map((feature) => (

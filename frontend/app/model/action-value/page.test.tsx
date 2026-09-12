@@ -16,7 +16,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe("Attacking Value methodology copy", () => {
+describe("Attacking Impact methodology copy", () => {
   it("presents clean model names and removes an internal version from limitations", async () => {
     mocks.getActionValueModel.mockResolvedValue({
       selection: {
@@ -56,7 +56,7 @@ describe("Attacking Value methodology copy", () => {
 
     render(await ActionValueModelPage());
 
-    expect(screen.getByRole("heading", { name: "Attacking Value model" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Attacking Impact model" })).toBeTruthy();
     expect(screen.getByRole("link", { name: "← Expected Pass model" }).getAttribute("href")).toBe(
       "/model",
     );

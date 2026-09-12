@@ -5,14 +5,14 @@ import { formatCount, formatDecimal, formatPercent, formatPercentagePoints } fro
 import type { LeaderboardEntry, LeaderboardMetric } from "@/lib/types";
 
 export const leaderboardLabels: Record<LeaderboardMetric, string> = {
-  completion_above_expected_pp: "Overall above expected",
+  completion_above_expected_pp: "Passing vs. expected",
   pressure_above_expected_pp: "Under-pressure above expected",
   progressive_above_expected_pp: "Progressive above expected",
   long_pass_above_expected_pp: "Long-pass above expected",
   final_third_entries_per_100_passes: "Final-third entries / 100",
-  expected_completion_rate: "Expected completion rate",
+  expected_completion_rate: "Pass difficulty",
   progressive_pass_rate: "Progressive-pass rate",
-  attacking_value_per_100_actions: "Attacking value / 100 actions",
+  attacking_value_per_100_actions: "Attacking impact / 100 actions",
   pass_value_per_100_passes: "Pass value / 100 passes",
   carry_value_per_100_carries: "Carry value / 100 carries",
   progressive_value_per_100_actions: "Progressive value / 100 actions",

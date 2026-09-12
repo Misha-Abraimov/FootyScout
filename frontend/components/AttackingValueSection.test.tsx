@@ -20,6 +20,7 @@ const profile: AttackingProfileResponse = {
 describe("AttackingValueSection", () => {
   it("keeps passing, carrying, and total action value distinct", () => {
     render(<AttackingValueSection profile={profile} />);
+    expect(screen.getByText("Attacking impact")).toBeTruthy();
     expect(screen.getByText("Possession value added")).toBeTruthy();
     expect(screen.getByText("Action value / 100")).toBeTruthy();
     expect(screen.getByText("Pass value / 100")).toBeTruthy();

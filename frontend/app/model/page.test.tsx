@@ -29,7 +29,7 @@ describe("model methodology navigation", () => {
       "/model/xg",
     );
     expect(
-      screen.getByRole("link", { name: "Attacking Value model →" }).getAttribute("href"),
+      screen.getByRole("link", { name: "Attacking Impact model →" }).getAttribute("href"),
     ).toBe("/model/action-value");
     expect(screen.getByText("Player Intelligence")).toBeTruthy();
     expect(screen.getByText("Team Intelligence")).toBeTruthy();

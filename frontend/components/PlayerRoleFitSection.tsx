@@ -20,7 +20,7 @@ export function PlayerRoleFitSection({ fit }: { fit: PlayerRoleFitResponse }) {
       <div className="mt-2 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h2 id="role-fit-title" className="text-2xl font-semibold">{fit.position_group} role</h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{comparison}</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">How closely a player&apos;s playing style matches this role. {comparison}</p>
         </div>
         <div>
           <span className="text-xs text-[var(--muted)]">Role distance · lower is closer</span>

@@ -23,8 +23,8 @@ export function PlayerTable({ players }: { players: PlayerSummary[] }) {
             <th className="px-4 py-4 font-medium">Position</th>
             <th className="px-4 py-4 text-right font-medium">Passes</th>
             <th className="px-4 py-4 text-right font-medium">Actual</th>
-            <th className="px-4 py-4 text-right font-medium">Expected</th>
-            <th className="px-4 py-4 text-right font-medium">Above expected</th>
+            <th className="px-4 py-4 text-right font-medium">Pass difficulty</th>
+            <th className="px-4 py-4 text-right font-medium">Passing vs. expected</th>
             <th className="px-5 py-4 text-right font-medium">Progressive rate</th>
           </tr>
         </thead>

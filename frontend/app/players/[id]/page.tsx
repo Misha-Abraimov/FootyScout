@@ -104,12 +104,12 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
 
         <section aria-labelledby="similar-title">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div><h2 id="similar-title" className="text-2xl font-semibold">Similar playing styles</h2><p className="mt-2 max-w-3xl text-sm text-[var(--muted)]">Similarity compares position-relative playing style across passing and carrying tendencies. Scores are not ability ratings.</p></div>
-            <p className="text-xs text-[var(--muted)]">100 means identical observed profiles; 50 is about the median same-position distance. Not a probability.</p>
+            <div><h2 id="similar-title" className="text-2xl font-semibold">Similar playing styles</h2><p className="mt-2 max-w-3xl text-sm text-[var(--muted)]">Style similarity compares position-relative playing style across passing and carrying tendencies. Scores are not ability ratings.</p></div>
+            <p className="text-xs text-[var(--muted)]">100 means identical observed profiles; 50 is about the median same-position playing style match. Not a probability.</p>
           </div>
           {similar.query_sample_support === "limited" && similar.available ? <p className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--panel)] px-4 py-3 text-sm text-[var(--muted)]"><span className="font-medium text-[var(--foreground)]">Limited sample:</span> this player&apos;s style profile is based on {similar.query_matches_observed} observed {similar.query_matches_observed === 1 ? "match" : "matches"}, so nearest-neighbor rankings may be less stable.</p> : null}
           {similar.items.length ? <div className="mt-5 grid gap-4 lg:grid-cols-2">{similar.items.map((item) => <SimilarPlayerCard key={item.similar_player_id} player={item} />)}</div> : <div className="mt-5"><EmptyState title="Playing-style similarity unavailable" message={similar.unavailable_reason ?? "No eligible same-position comparisons are available for this player."} /></div>}
-          <p className="mt-4 text-xs leading-5 text-[var(--muted)]">Sample support uses the lower observed-match count in each pair. Lower coverage means a measured profile may vary more with additional matches; it never changes the similarity score or ranking.</p>
+          <p className="mt-4 text-xs leading-5 text-[var(--muted)]">Sample support uses the lower observed-match count in each pair. Lower coverage means a measured profile may vary more with additional matches; it never changes the style similarity or ranking.</p>
         </section>
       </main>
   );

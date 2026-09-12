@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { formatDecimal } from "@/lib/format";
+import { displayMetricLabel } from "@/lib/terminology";
 import type { ArchetypeCatalogueResponse } from "@/lib/types";
 
 export function ArchetypeCatalogue({ catalogue }: { catalogue: ArchetypeCatalogueResponse }) {
@@ -23,7 +24,7 @@ export function ArchetypeCatalogue({ catalogue }: { catalogue: ArchetypeCatalogu
             <ul className="mt-3 space-y-2">
               {definition.distinguishing_features.map((feature) => (
                 <li key={feature.feature_name} className="flex items-center justify-between gap-4 text-sm">
-                  <span><span aria-hidden="true" className="mr-2 text-[var(--accent-strong)]">{feature.direction === "higher" ? "↑" : "↓"}</span>{feature.label}</span>
+                  <span><span aria-hidden="true" className="mr-2 text-[var(--accent-strong)]">{feature.direction === "higher" ? "↑" : "↓"}</span>{displayMetricLabel(feature.label)}</span>
                   <span className="metric-tabular text-xs text-[var(--muted)]">{feature.position_z >= 0 ? "+" : ""}{formatDecimal(feature.position_z, 2)} z</span>
                 </li>
               ))}

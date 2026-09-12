@@ -1,4 +1,5 @@
 import { formatDecimal } from "@/lib/format";
+import { displayMetricLabel } from "@/lib/terminology";
 import type { PlayerArchetype } from "@/lib/types";
 
 export function PlayerArchetypeCard({ archetype }: { archetype: PlayerArchetype }) {
@@ -41,7 +42,7 @@ export function PlayerArchetypeCard({ archetype }: { archetype: PlayerArchetype 
             <span aria-hidden="true" className="mr-2 text-[var(--accent-strong)]">
               {feature.direction === "higher" ? "↑" : "↓"}
             </span>
-            {feature.label} <span className="text-xs">({feature.direction})</span>
+            {displayMetricLabel(feature.label)} <span className="text-xs">({feature.direction})</span>
           </p>
         ))}
       </div>
@@ -67,15 +68,16 @@ function RelativeStyleBar({
 }) {
   const magnitude = Math.min(Math.abs(dimension.position_z) / 3, 1) * 50;
   const positive = dimension.position_z >= 0;
+  const label = displayMetricLabel(dimension.label);
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3 text-xs">
-        <span>{dimension.label}</span>
+        <span>{label}</span>
         <span className="metric-tabular text-[var(--muted)]">{dimension.position_z >= 0 ? "+" : ""}{formatDecimal(dimension.position_z, 2)} z</span>
       </div>
       <div
         role="img"
-        aria-label={`${dimension.label}: ${formatDecimal(dimension.position_z, 2)} standard deviations relative to eligible ${position} peers`}
+        aria-label={`${label}: ${formatDecimal(dimension.position_z, 2)} standard deviations relative to eligible ${position} peers`}
         className="relative mt-1.5 h-2 overflow-hidden rounded-full bg-white/8"
       >
         <span aria-hidden="true" className="absolute inset-y-0 left-1/2 w-px bg-white/35" />

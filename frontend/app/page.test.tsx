@@ -46,7 +46,7 @@ describe("homepage", () => {
         name: "Scout players beyond traditional statistics.",
       }),
     ).toBeTruthy();
-    expect(screen.getByText(/models pass difficulty, expected goals, attacking value/)).toBeTruthy();
+    expect(screen.getByText(/models pass difficulty, expected goals, attacking impact/)).toBeTruthy();
     expect(screen.getByText(/analyze Team Intelligence, and surface Role Fit scouting recommendations/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Explore players" }).getAttribute("href")).toBe("/players");
     expect(screen.getByRole("link", { name: "View archetypes" }).getAttribute("href")).toBe("/archetypes");
@@ -60,14 +60,15 @@ describe("homepage", () => {
     expect(screen.getByText("133")).toBeTruthy();
     expect(screen.getByText("Player profiles across the available competition sample")).toBeTruthy();
     expect(screen.getByText("Teams represented in the available Bundesliga event data")).toBeTruthy();
-    expect(screen.getByText("States evaluated for attacking-value estimation")).toBeTruthy();
-    expect(screen.getByText("Eligible outfield players with position-aware style profiles")).toBeTruthy();
+    expect(screen.getByText("Game situations evaluated for attacking-impact estimation")).toBeTruthy();
+    expect(screen.getByText("Game situations analyzed")).toBeTruthy();
+    expect(screen.getByText("Eligible outfield players with same-position comparison profiles")).toBeTruthy();
 
     expect(screen.getByText("How FootyScout builds scouting intelligence")).toBeTruthy();
     for (const step of [
       "Event data",
       "Predictive models",
-      "Attacking value",
+      "Attacking impact",
       "Player intelligence",
       "Team & role fit",
     ]) {
@@ -77,6 +78,6 @@ describe("homepage", () => {
     expect(screen.queryByText("A transparent analytical base")).toBeNull();
     expect(screen.queryByText("From event data to a focused shortlist")).toBeNull();
     expect(screen.queryByText("From observed roles to a focused shortlist")).toBeNull();
-    expect(screen.getByText(/observed playing-style distance/)).toBeTruthy();
+    expect(screen.getByText(/observed playing style match/)).toBeTruthy();
   });
 });

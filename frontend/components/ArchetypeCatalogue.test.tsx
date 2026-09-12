@@ -66,5 +66,6 @@ describe("ArchetypeCatalogue", () => {
     expect(screen.getByRole("link", { name: "Matthias Bader" }).getAttribute("href")).toBe("/players/15797");
     expect(screen.getAllByText(/not the best players/)).toHaveLength(2);
     expect(screen.getByText("DEF 35 · MID 20 · FWD 5")).toBeTruthy();
+    expect(screen.getByText("Pass difficulty")).toBeTruthy();
   });
 });

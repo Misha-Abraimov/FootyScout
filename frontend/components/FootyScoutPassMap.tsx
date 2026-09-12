@@ -94,7 +94,7 @@ export function FootyScoutPassMap({
           <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Campos visualization</p>
           <h2 id="pass-map-title" className="mt-2 text-xl font-semibold">Pass map</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--muted)]">
-            Attacking left to right. Switch between xPass execution difficulty and possession attacking value.
+            Attacking left to right. Switch between xPass execution difficulty and possession attacking impact.
           </p>
         </div>
         <p aria-live="polite" className="metric-tabular text-sm text-[var(--muted)]">
@@ -112,7 +112,7 @@ export function FootyScoutPassMap({
       <label className="mt-4 grid max-w-xs gap-2 text-xs text-[var(--muted)]">Analytical view
         <select value={analysisView} onChange={(event) => setAnalysisView(event.target.value as "difficulty" | "value")} className="rounded-lg border border-[var(--border)] bg-[#0a100e] px-3 py-2.5 text-sm text-white">
           <option value="difficulty">xPass difficulty</option>
-          <option value="value">Attacking value</option>
+          <option value="value">Attacking impact</option>
         </select>
       </label>
 
@@ -166,7 +166,7 @@ export function FootyScoutPassMap({
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--muted)]" aria-label="Pass map legend">
             <span><i className="mr-2 inline-block h-0.5 w-6 bg-[#80e4a8] align-middle" />Completed</span>
             <span><i className="mr-2 inline-block w-6 border-t-2 border-dashed border-[#ff8f86] align-middle" />Incomplete</span>
-            <span>{analysisView === "difficulty" ? "Stronger line = lower expected completion" : "Stronger line = larger absolute attacking value"}</span>
+            <span>{analysisView === "difficulty" ? "Stronger line = greater pass difficulty" : "Stronger line = larger absolute attacking impact"}</span>
             <span>Thicker line = progressive or under pressure</span>
           </div>
 
@@ -188,9 +188,9 @@ export function FootyScoutPassMap({
             </label>
             {selected ? (
               <dl className="grid grid-cols-2 gap-x-5 gap-y-3 text-sm sm:grid-cols-4">
-                <PassDetail label="Expected completion" value={formatPercent(selected.expected_completion)} />
+                <PassDetail label="Pass difficulty" value={formatPercent(selected.expected_completion)} />
                 <PassDetail label="Outcome" value={selected.completed ? "Completed" : "Incomplete"} />
-                <PassDetail label="Attacking value" value={selected.attacking_value == null ? "—" : selected.attacking_value.toFixed(4)} />
+                <PassDetail label="Attacking impact" value={selected.attacking_value == null ? "—" : selected.attacking_value.toFixed(4)} />
                 <PassDetail label="Value before" value={selected.state_value_before == null ? "—" : selected.state_value_before.toFixed(4)} />
                 <PassDetail label="Value after" value={selected.state_value_after == null ? "—" : selected.state_value_after.toFixed(4)} />
                 <PassDetail label="Length" value={`${selected.pass_length.toFixed(1)} m`} />

@@ -28,7 +28,7 @@ export default async function TeamIntelligencePage({ params }: { params: Promise
         <h2 id="team-overview-title" className="text-2xl font-semibold">Team style overview</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <MetricCard label="Matches observed" value={formatCount(team.matches_observed)} note={`${formatCount(team.contributors)} contributors`} />
-          <MetricCard label="Expected completion" value={formatPercent(team.metrics.expected_completion_rate)} />
+          <MetricCard label="Pass difficulty" value={formatPercent(team.metrics.expected_completion_rate)} />
           <MetricCard label="Progressive-pass rate" value={formatPercent(team.metrics.progressive_pass_rate)} />
           <MetricCard label="Carry share" value={formatPercent(team.metrics.carry_share_of_actions)} />
         </div>
@@ -52,7 +52,7 @@ export default async function TeamIntelligencePage({ params }: { params: Promise
           <MetricCard label="Progressive-carry rate" value={formatPercent(team.metrics.progressive_carry_rate)} />
           <MetricCard label="Shots / match" value={formatDecimal(team.metrics.shots_per_match, 2)} />
           <MetricCard label="xG / shot" value={formatDecimal(team.metrics.xg_per_shot, 3)} />
-          <MetricCard label="Attacking value / 100" value={formatDecimal(team.metrics.attacking_value_per_100_actions, 3)} />
+          <MetricCard label="Attacking impact / 100" value={formatDecimal(team.metrics.attacking_value_per_100_actions, 3)} />
         </div>
         <p className="mt-4 text-xs leading-5 text-[var(--muted)]">Attacking and value metrics describe the observed sample. They are not inputs to Role Fit.</p>
       </section>

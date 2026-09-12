@@ -7,6 +7,7 @@ import { PlayerAutocomplete } from "@/components/PlayerAutocomplete";
 import { ErrorState } from "@/components/States";
 import { api } from "@/lib/api";
 import { formatDecimal, formatPercent, formatPercentagePoints, formatPercentile } from "@/lib/format";
+import { displayMetricLabel } from "@/lib/terminology";
 import type { ComparisonResponse, PlayerIdentity, PlayerIntelligenceResponse, PlayerProfileResponse, PlayerSummary } from "@/lib/types";
 
 export function CompareClient({ initial }: { initial: ComparisonResponse | null }) {
@@ -60,8 +61,8 @@ export function CompareClient({ initial }: { initial: ComparisonResponse | null 
 function ComparisonResults({ left, right, attacking, intelligence, sameGroup }: { left: PlayerProfileResponse; right: PlayerProfileResponse; attacking: ComparisonResponse["attacking"]; intelligence: ComparisonResponse["intelligence"]; sameGroup: boolean }) {
   const metrics: Array<[string, number | null, number | null, (value: number | null) => string]> = [
     ["Actual completion", left.actual_completion_rate, right.actual_completion_rate, formatPercent],
-    ["Expected completion", left.expected_completion_rate, right.expected_completion_rate, formatPercent],
-    ["Completion above expected", left.completion_above_expected_pp, right.completion_above_expected_pp, formatPercentagePoints],
+    ["Pass difficulty", left.expected_completion_rate, right.expected_completion_rate, formatPercent],
+    ["Passing vs. expected", left.completion_above_expected_pp, right.completion_above_expected_pp, formatPercentagePoints],
     ["Under-pressure above expected", left.pressure_above_expected_pp, right.pressure_above_expected_pp, formatPercentagePoints],
     ["Progressive above expected", left.progressive_above_expected_pp, right.progressive_above_expected_pp, formatPercentagePoints],
     ["Long-pass above expected", left.long_pass_above_expected_pp, right.long_pass_above_expected_pp, formatPercentagePoints],
@@ -78,7 +79,7 @@ function ComparisonResults({ left, right, attacking, intelligence, sameGroup }: 
       </div>
       {!sameGroup ? <p className="mt-3 text-xs text-amber-100/70">Cross-position comparison: interpret role-dependent metrics with care.</p> : null}
       <div className="mt-5 grid gap-3 lg:grid-cols-2">{metrics.map(([label, a, b, formatter]) => <ComparisonMetric key={label} label={label} left={a} right={b} format={formatter} />)}</div>
-      {attacking.length === 2 ? <><h3 className="mt-10 text-lg font-semibold">Attacking value</h3><div className="mt-4 grid gap-3 lg:grid-cols-2">{[
+      {attacking.length === 2 ? <><h3 className="mt-10 text-lg font-semibold">Attacking impact</h3><div className="mt-4 grid gap-3 lg:grid-cols-2">{[
         ["Action value / 100", attacking[0]?.attacking_value_per_100_actions ?? null, attacking[1]?.attacking_value_per_100_actions ?? null],
         ["Pass value / 100", attacking[0]?.pass_value_per_100_passes ?? null, attacking[1]?.pass_value_per_100_passes ?? null],
         ["Carry value / 100", attacking[0]?.carry_value_per_100_carries ?? null, attacking[1]?.carry_value_per_100_carries ?? null],
@@ -142,7 +143,7 @@ export function PositionPercentiles({ left, right, sameGroup }: { left: PlayerIn
         {preferred.map((name) => {
           const first = leftByName.get(name);
           const second = rightByName.get(name);
-          const label = first?.label ?? second?.label ?? name;
+          const label = displayMetricLabel(first?.label ?? second?.label ?? name);
           return (
             <div key={name} className="grid grid-cols-[minmax(130px,1fr)_minmax(100px,0.7fr)_minmax(100px,0.7fr)] border-t border-[var(--border)] px-4 py-3 text-sm">
               <span>{label}</span>

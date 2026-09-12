@@ -80,7 +80,7 @@ describe("TeamRoleProfile", () => {
   it("renders position-relative style dimensions and support counts", () => {
     render(<TeamRoleProfile role={role()} />);
     expect(screen.getByText("MID")).toBeTruthy();
-    expect(screen.getByLabelText(/Expected completion: 0.42 position-relative/)).toBeTruthy();
+    expect(screen.getByLabelText(/Pass difficulty: 0.42 position-relative/)).toBeTruthy();
     expect(screen.getByText("10")).toBeTruthy();
     expect(screen.getByText(/style, not quality/)).toBeTruthy();
   });
@@ -97,6 +97,7 @@ describe("PlayerRoleFitSection", () => {
     render(<PlayerRoleFitSection fit={fit()} />);
     expect(screen.getByText("0.390")).toBeTruthy();
     expect(screen.getByText(/lower is closer/i)).toBeTruthy();
+    expect(screen.getByText(/How closely a player's playing style matches this role/)).toBeTruthy();
     expect(screen.getByText("limited sample")).toBeTruthy();
     expect(screen.getByText(/does not predict transfer success/)).toBeTruthy();
   });

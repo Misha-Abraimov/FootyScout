@@ -9,7 +9,7 @@ import { formatCount, humanizeField } from "@/lib/format";
 import type { ValueModelMetrics } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Attacking action value model" };
+export const metadata: Metadata = { title: "Attacking impact model" };
 
 function ValueMetrics({ title, metrics }: { title: string; metrics: ValueModelMetrics | undefined }) {
   const values = metrics ? { roc_auc: metrics.rmse, log_loss: metrics.mae, brier_score: metrics.r2, accuracy: metrics.spearman, expected_calibration_error: metrics.positive_target_rmse } : undefined;
@@ -26,7 +26,7 @@ export default async function ActionValueModelPage() {
   const selectedValidation = model.validation_metrics[model.selection.model];
   return (
     <main className="mx-auto min-h-screen max-w-7xl space-y-12 px-5 py-10 sm:px-8 sm:py-14">
-      <PageHeader eyebrow="Possession-value methodology" title="Attacking Value model" description="Estimate how much a pass or carry changes the future expected-goal value of the current possession." />
+      <PageHeader eyebrow="Possession-value methodology" title="Attacking Impact model" description="Estimate how much a pass or carry changes the future expected-goal value of the current possession." />
       <p className="-mt-8 text-sm"><Link href="/model" className="text-[var(--accent)]">← Expected Pass model</Link><span className="mx-3 text-[var(--muted)]">·</span><Link href="/model/xg" className="text-[var(--accent)]">Expected Goals model</Link></p>
       <section className="grid gap-4 lg:grid-cols-2">
         <article className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-6"><p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Selected model</p><h2 className="mt-3 text-2xl font-semibold">{humanizeField(model.selection.model)}</h2><p className="mt-3 text-sm leading-6 text-[var(--muted)]">{model.selection.reason}</p><p className="mt-4 text-xs text-[var(--muted)]">Objective: {model.selection.objective} · selected using {humanizeField(model.selection.primary_metric)}</p></article>
