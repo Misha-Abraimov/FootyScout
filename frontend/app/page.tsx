@@ -49,8 +49,8 @@ export default async function Home() {
 
         <div className="mx-auto max-w-7xl space-y-20 px-5 py-14 sm:px-8 sm:py-20">
           <section aria-labelledby="overview-heading">
-            <div className="mb-6 flex items-end justify-between gap-4">
-              <div><p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Current dataset</p><h2 id="overview-heading" className="mt-2 text-2xl font-semibold">A transparent analytical base</h2></div>
+            <div className="mb-5 flex items-end justify-between gap-4">
+              <p id="overview-heading" className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Current dataset</p>
               <Link href="/model" className="text-sm font-semibold text-[var(--accent-strong)] hover:underline">Read methodology →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -62,9 +62,8 @@ export default async function Home() {
           </section>
 
           <section aria-labelledby="pipeline-heading">
-            <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">How FootyScout builds scouting intelligence</p>
-            <h2 id="pipeline-heading" className="mt-2 text-2xl font-semibold">From event data to a focused shortlist</h2>
-            <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] lg:grid-cols-5">
+            <p id="pipeline-heading" className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">How FootyScout builds scouting intelligence</p>
+            <div className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] lg:grid-cols-5">
               {flow.map(([number, title, description], index) => (
                 <article key={title} className="relative bg-[var(--panel)] p-5">
                   <span className="text-xs font-semibold text-[var(--accent)]">{number}</span>
@@ -78,10 +77,9 @@ export default async function Home() {
 
           <section aria-labelledby="team-intelligence-heading">
             <div>
-              <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Team Intelligence & Scouting</p>
-              <h2 id="team-intelligence-heading" className="mt-2 text-2xl font-semibold">From observed roles to a focused shortlist</h2>
+              <p id="team-intelligence-heading" className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Team Intelligence & Scouting</p>
             </div>
-            <div className="mt-7 grid gap-4 md:grid-cols-2">
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
               <Link href="/teams/904" className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-6 transition-colors hover:bg-[var(--panel-raised)]">
                 <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Bayer Leverkusen</p>
                 <h3 className="mt-3 text-xl font-semibold">Explore Team Intelligence</h3>

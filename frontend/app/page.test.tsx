@@ -64,7 +64,6 @@ describe("homepage", () => {
     expect(screen.getByText("Eligible outfield players with position-aware style profiles")).toBeTruthy();
 
     expect(screen.getByText("How FootyScout builds scouting intelligence")).toBeTruthy();
-    expect(screen.getByRole("heading", { name: "From event data to a focused shortlist" })).toBeTruthy();
     for (const step of [
       "Event data",
       "Predictive models",
@@ -75,6 +74,9 @@ describe("homepage", () => {
       expect(screen.getByRole("heading", { name: step })).toBeTruthy();
     }
     expect(screen.queryByText("How xPass becomes a profile")).toBeNull();
+    expect(screen.queryByText("A transparent analytical base")).toBeNull();
+    expect(screen.queryByText("From event data to a focused shortlist")).toBeNull();
+    expect(screen.queryByText("From observed roles to a focused shortlist")).toBeNull();
     expect(screen.getByText(/observed playing-style distance/)).toBeTruthy();
   });
 });
