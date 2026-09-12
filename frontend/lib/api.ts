@@ -26,12 +26,41 @@ import type {
   PlayerRoleFitResponse,
 } from "@/lib/types";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(
-  /\/$/,
-  "",
-);
-
 type QueryValue = string | number | boolean | null | undefined;
+
+export type ApiRuntime = {
+  publicApiUrl?: string;
+  vercelUrl?: string;
+  browserOrigin?: string;
+};
+
+function currentApiRuntime(): ApiRuntime {
+  return {
+    publicApiUrl: process.env.NEXT_PUBLIC_API_URL,
+    vercelUrl: process.env.VERCEL_URL,
+    browserOrigin: typeof window === "undefined" ? undefined : window.location.origin,
+  };
+}
+
+export function resolveApiBaseUrl(runtime: ApiRuntime): string {
+  const configuredUrl = runtime.publicApiUrl?.trim();
+  if (configuredUrl) {
+    return configuredUrl.replace(/\/$/, "");
+  }
+
+  const browserOrigin = runtime.browserOrigin?.trim();
+  if (browserOrigin) {
+    return browserOrigin.replace(/\/$/, "");
+  }
+
+  const vercelUrl = runtime.vercelUrl?.trim();
+  if (vercelUrl) {
+    const hostname = vercelUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    return `https://${hostname}`;
+  }
+
+  return "http://localhost:8000";
+}
 
 export class ApiError extends Error {
   constructor(
@@ -46,8 +75,9 @@ export class ApiError extends Error {
 export function buildApiUrl(
   path: string,
   query?: object,
+  runtime: ApiRuntime = currentApiRuntime(),
 ): string {
-  const url = new URL(path, `${API_URL}/`);
+  const url = new URL(path, `${resolveApiBaseUrl(runtime)}/`);
   if (query) {
     const entries = Object.entries(query) as Array<[string, QueryValue]>;
     for (const [key, value] of entries) {
@@ -56,7 +86,8 @@ export function buildApiUrl(
       }
     }
   }
-  return url.toString();
+  const useSameOriginPath = !runtime.publicApiUrl?.trim() && Boolean(runtime.browserOrigin);
+  return useSameOriginPath ? `${url.pathname}${url.search}${url.hash}` : url.toString();
 }
 
 async function apiFetch<T>(

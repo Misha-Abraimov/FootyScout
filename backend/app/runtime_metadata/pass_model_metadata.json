@@ -1,0 +1,819 @@
+{
+  "dataset": {
+    "path": "data/processed/pass_features.parquet",
+    "pass_count": 39214,
+    "match_count": 34,
+    "completion_rate": 0.8500025501096548
+  },
+  "feature_columns": [
+    "start_x",
+    "start_y",
+    "end_x",
+    "end_y",
+    "pass_length",
+    "pass_angle",
+    "forward_distance",
+    "lateral_distance",
+    "distance_to_goal_before",
+    "distance_to_goal_after",
+    "distance_toward_goal",
+    "under_pressure",
+    "pass_height",
+    "body_part",
+    "pass_type",
+    "start_zone",
+    "end_zone",
+    "progressive"
+  ],
+  "models_evaluated": [
+    "logistic_regression",
+    "pytorch_mlp",
+    "xgboost"
+  ],
+  "numeric_feature_columns": [
+    "start_x",
+    "start_y",
+    "end_x",
+    "end_y",
+    "pass_length",
+    "pass_angle",
+    "forward_distance",
+    "lateral_distance",
+    "distance_to_goal_before",
+    "distance_to_goal_after",
+    "distance_toward_goal"
+  ],
+  "boolean_feature_columns": [
+    "under_pressure",
+    "progressive"
+  ],
+  "categorical_feature_columns": [
+    "pass_height",
+    "body_part",
+    "pass_type",
+    "start_zone",
+    "end_zone"
+  ],
+  "evaluation_encoded_feature_count": 50,
+  "preprocessing": {
+    "evaluation_fit_split": "train only",
+    "oof_fit_policy": "fit separately inside each outer training fold",
+    "numeric": "median imputation then StandardScaler",
+    "boolean": "explicit 0/1 conversion then most-frequent imputation",
+    "categorical": "most-frequent imputation then OneHotEncoder(handle_unknown='ignore', sparse_output=False)",
+    "evaluation_feature_names": [
+      "start_x",
+      "start_y",
+      "end_x",
+      "end_y",
+      "pass_length",
+      "pass_angle",
+      "forward_distance",
+      "lateral_distance",
+      "distance_to_goal_before",
+      "distance_to_goal_after",
+      "distance_toward_goal",
+      "under_pressure",
+      "progressive",
+      "pass_height_Ground Pass",
+      "pass_height_High Pass",
+      "pass_height_Low Pass",
+      "body_part_Drop Kick",
+      "body_part_Head",
+      "body_part_Keeper Arm",
+      "body_part_Left Foot",
+      "body_part_No Touch",
+      "body_part_Other",
+      "body_part_Right Foot",
+      "body_part_Unknown",
+      "pass_type_Corner",
+      "pass_type_Free Kick",
+      "pass_type_Goal Kick",
+      "pass_type_Interception",
+      "pass_type_Kick Off",
+      "pass_type_Recovery",
+      "pass_type_Regular",
+      "pass_type_Throw-in",
+      "start_zone_attacking_centre",
+      "start_zone_attacking_left",
+      "start_zone_attacking_right",
+      "start_zone_defensive_centre",
+      "start_zone_defensive_left",
+      "start_zone_defensive_right",
+      "start_zone_middle_centre",
+      "start_zone_middle_left",
+      "start_zone_middle_right",
+      "end_zone_attacking_centre",
+      "end_zone_attacking_left",
+      "end_zone_attacking_right",
+      "end_zone_defensive_centre",
+      "end_zone_defensive_left",
+      "end_zone_defensive_right",
+      "end_zone_middle_centre",
+      "end_zone_middle_left",
+      "end_zone_middle_right"
+    ]
+  },
+  "split": {
+    "method": "grouped by match_id; whole matches; approximately 80/10/10",
+    "random_seed": 42,
+    "train": {
+      "match_count": 27,
+      "match_ids": [
+        3895052,
+        3895060,
+        3895067,
+        3895074,
+        3895086,
+        3895095,
+        3895107,
+        3895113,
+        3895134,
+        3895139,
+        3895153,
+        3895158,
+        3895167,
+        3895180,
+        3895194,
+        3895202,
+        3895210,
+        3895232,
+        3895250,
+        3895258,
+        3895275,
+        3895302,
+        3895309,
+        3895320,
+        3895333,
+        3895340,
+        3895348
+      ],
+      "pass_count": 31244,
+      "completion_rate": 0.8531558059147356
+    },
+    "validation": {
+      "match_count": 3,
+      "match_ids": [
+        3895121,
+        3895244,
+        3895286
+      ],
+      "pass_count": 3319,
+      "completion_rate": 0.8189213618559807
+    },
+    "test": {
+      "match_count": 4,
+      "match_ids": [
+        3895182,
+        3895220,
+        3895266,
+        3895292
+      ],
+      "pass_count": 4651,
+      "completion_rate": 0.8509997849924748
+    }
+  },
+  "pytorch": {
+    "architecture": [
+      "Linear(input_dim, 64)",
+      "ReLU",
+      "Dropout(0.2)",
+      "Linear(64, 32)",
+      "ReLU",
+      "Dropout(0.2)",
+      "Linear(32, 1)"
+    ],
+    "loss": "BCEWithLogitsLoss",
+    "optimizer": "AdamW",
+    "training_parameters": {
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "batch_size": 256,
+      "max_epochs": 50,
+      "patience": 7,
+      "min_delta": 0.0001,
+      "random_seed": 42
+    },
+    "epochs_trained": 23,
+    "best_epoch": 16,
+    "best_validation_loss": 0.2701541483402252,
+    "stopped_early": true
+  },
+  "temperature_scaling": {
+    "fit_split": "validation only",
+    "temperature": 0.9368692636489868,
+    "retained": true,
+    "reason": "validation log loss and Brier score improved without worsening ECE",
+    "uncalibrated_validation_metrics": {
+      "roc_auc": 0.9159341984600109,
+      "log_loss": 0.2701541682479213,
+      "brier_score": 0.08499338124737954,
+      "accuracy": 0.8755649291955409,
+      "expected_calibration_error": 0.013521299485603246
+    },
+    "calibrated_validation_metrics": {
+      "roc_auc": 0.9159341984600109,
+      "log_loss": 0.2696740307484722,
+      "brier_score": 0.08496100417313532,
+      "accuracy": 0.8755649291955409,
+      "expected_calibration_error": 0.010925198198891251
+    }
+  },
+  "xgboost": {
+    "version": "3.4.1",
+    "random_seed": 42,
+    "selection_metric": "validation log loss",
+    "selected_parameters": {
+      "objective": "binary:logistic",
+      "eval_metric": "logloss",
+      "tree_method": "hist",
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "n_estimators": 1200,
+      "min_child_weight": 5.0,
+      "subsample": 0.85,
+      "colsample_bytree": 0.85,
+      "reg_lambda": 3.0,
+      "reg_alpha": 0.1,
+      "early_stopping_rounds": 50,
+      "random_state": 42,
+      "n_jobs": 4
+    },
+    "best_iteration": 314,
+    "boosting_rounds": 315,
+    "candidates": [
+      {
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "max_depth": 3,
+          "learning_rate": 0.05,
+          "n_estimators": 1200,
+          "min_child_weight": 5.0,
+          "subsample": 0.85,
+          "colsample_bytree": 0.85,
+          "reg_lambda": 2.0,
+          "reg_alpha": 0.05,
+          "early_stopping_rounds": 50,
+          "random_state": 42,
+          "n_jobs": 4
+        },
+        "best_iteration": 417,
+        "boosting_rounds": 418,
+        "validation_metrics": {
+          "roc_auc": 0.9208138508421702,
+          "log_loss": 0.2616618508617535,
+          "brier_score": 0.08100029131815849,
+          "accuracy": 0.881892136185598,
+          "expected_calibration_error": 0.012029805351705338
+        }
+      },
+      {
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "max_depth": 4,
+          "learning_rate": 0.05,
+          "n_estimators": 1200,
+          "min_child_weight": 5.0,
+          "subsample": 0.85,
+          "colsample_bytree": 0.85,
+          "reg_lambda": 3.0,
+          "reg_alpha": 0.1,
+          "early_stopping_rounds": 50,
+          "random_state": 42,
+          "n_jobs": 4
+        },
+        "best_iteration": 314,
+        "boosting_rounds": 315,
+        "validation_metrics": {
+          "roc_auc": 0.920994442669135,
+          "log_loss": 0.2615097117058297,
+          "brier_score": 0.08101450890062187,
+          "accuracy": 0.8840012051822839,
+          "expected_calibration_error": 0.010204766891586921
+        }
+      },
+      {
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "max_depth": 5,
+          "learning_rate": 0.03,
+          "n_estimators": 1600,
+          "min_child_weight": 8.0,
+          "subsample": 0.9,
+          "colsample_bytree": 0.9,
+          "reg_lambda": 4.0,
+          "reg_alpha": 0.1,
+          "early_stopping_rounds": 50,
+          "random_state": 42,
+          "n_jobs": 4
+        },
+        "best_iteration": 361,
+        "boosting_rounds": 362,
+        "validation_metrics": {
+          "roc_auc": 0.9208257882680204,
+          "log_loss": 0.2615347166698114,
+          "brier_score": 0.08077384193602058,
+          "accuracy": 0.8852063874661042,
+          "expected_calibration_error": 0.008452247307445291
+        }
+      }
+    ],
+    "calibration": {
+      "method": "temperature_scaling_on_raw_margins",
+      "fit_split": "validation only",
+      "temperature": 0.9848703145980835,
+      "retained": false,
+      "reason": "not retained because validation log loss, Brier score, and ECE did not jointly satisfy the conservative improvement rule",
+      "uncalibrated_validation_metrics": {
+        "roc_auc": 0.920994442669135,
+        "log_loss": 0.26150971182908933,
+        "brier_score": 0.08101450894377414,
+        "accuracy": 0.8840012051822839,
+        "expected_calibration_error": 0.010204766953319663
+      },
+      "calibrated_validation_metrics": {
+        "roc_auc": 0.920994442669135,
+        "log_loss": 0.2614787680799094,
+        "brier_score": 0.08103043108693495,
+        "accuracy": 0.8840012051822839,
+        "expected_calibration_error": 0.0090113222168584
+      }
+    },
+    "feature_importance": {
+      "importance_type": "gain",
+      "interpretation": "model feature importance; not a causal claim",
+      "features": [
+        {
+          "feature": "pass_height_Ground Pass",
+          "gain": 413.6780700683594,
+          "normalized_gain": 0.3411688509590019
+        },
+        {
+          "feature": "progressive",
+          "gain": 320.3908996582031,
+          "normalized_gain": 0.264232994212256
+        },
+        {
+          "feature": "pass_type_Throw-in",
+          "gain": 66.0355453491211,
+          "normalized_gain": 0.05446087854134447
+        },
+        {
+          "feature": "distance_to_goal_after",
+          "gain": 42.28434753417969,
+          "normalized_gain": 0.034872775004493976
+        },
+        {
+          "feature": "pass_length",
+          "gain": 38.99296951293945,
+          "normalized_gain": 0.03215830755062898
+        },
+        {
+          "feature": "distance_toward_goal",
+          "gain": 37.499473571777344,
+          "normalized_gain": 0.030926590592381686
+        },
+        {
+          "feature": "pass_height_High Pass",
+          "gain": 19.65965461730957,
+          "normalized_gain": 0.0162137233306324
+        },
+        {
+          "feature": "forward_distance",
+          "gain": 17.858747482299805,
+          "normalized_gain": 0.01472847800971505
+        },
+        {
+          "feature": "under_pressure",
+          "gain": 17.84952163696289,
+          "normalized_gain": 0.014720869264460073
+        },
+        {
+          "feature": "end_y",
+          "gain": 16.25470733642578,
+          "normalized_gain": 0.01340559296200266
+        },
+        {
+          "feature": "end_zone_attacking_centre",
+          "gain": 14.738951683044434,
+          "normalized_gain": 0.012155517959203332
+        },
+        {
+          "feature": "end_x",
+          "gain": 14.007269859313965,
+          "normalized_gain": 0.0115520848426534
+        },
+        {
+          "feature": "start_zone_attacking_centre",
+          "gain": 12.839028358459473,
+          "normalized_gain": 0.010588611941072506
+        },
+        {
+          "feature": "pass_type_Regular",
+          "gain": 12.217752456665039,
+          "normalized_gain": 0.010076232869325486
+        },
+        {
+          "feature": "end_zone_middle_centre",
+          "gain": 11.309588432312012,
+          "normalized_gain": 0.009327251235806393
+        },
+        {
+          "feature": "body_part_Head",
+          "gain": 9.932470321655273,
+          "normalized_gain": 0.008191513478738553
+        },
+        {
+          "feature": "lateral_distance",
+          "gain": 9.27096939086914,
+          "normalized_gain": 0.007645959994534469
+        },
+        {
+          "feature": "pass_type_Recovery",
+          "gain": 8.406394004821777,
+          "normalized_gain": 0.006932926811565712
+        },
+        {
+          "feature": "end_zone_defensive_centre",
+          "gain": 7.940882682800293,
+          "normalized_gain": 0.0065490100068479
+        },
+        {
+          "feature": "distance_to_goal_before",
+          "gain": 7.4694437980651855,
+          "normalized_gain": 0.006160204618696936
+        },
+        {
+          "feature": "start_zone_defensive_centre",
+          "gain": 7.055983066558838,
+          "normalized_gain": 0.0058192150113402326
+        },
+        {
+          "feature": "body_part_Keeper Arm",
+          "gain": 6.593705654144287,
+          "normalized_gain": 0.005437965278687711
+        },
+        {
+          "feature": "end_zone_attacking_left",
+          "gain": 6.554300785064697,
+          "normalized_gain": 0.005405467269054636
+        },
+        {
+          "feature": "start_x",
+          "gain": 6.331485271453857,
+          "normalized_gain": 0.005221706711619507
+        },
+        {
+          "feature": "start_zone_middle_centre",
+          "gain": 6.2460761070251465,
+          "normalized_gain": 0.005151268009164971
+        },
+        {
+          "feature": "body_part_Unknown",
+          "gain": 6.235446929931641,
+          "normalized_gain": 0.005142501907217551
+        },
+        {
+          "feature": "start_zone_attacking_left",
+          "gain": 5.4583258628845215,
+          "normalized_gain": 0.004501594107931292
+        },
+        {
+          "feature": "pass_height_Low Pass",
+          "gain": 5.158449649810791,
+          "normalized_gain": 0.004254279999577917
+        },
+        {
+          "feature": "start_y",
+          "gain": 5.117149353027344,
+          "normalized_gain": 0.004220218791558004
+        },
+        {
+          "feature": "pass_angle",
+          "gain": 5.00809907913208,
+          "normalized_gain": 0.004130282777701955
+        },
+        {
+          "feature": "pass_type_Free Kick",
+          "gain": 4.589285373687744,
+          "normalized_gain": 0.0037848784621463483
+        },
+        {
+          "feature": "pass_type_Interception",
+          "gain": 4.387194633483887,
+          "normalized_gain": 0.0036182100535130097
+        },
+        {
+          "feature": "start_zone_attacking_right",
+          "gain": 4.09941291809082,
+          "normalized_gain": 0.0033808705272687528
+        },
+        {
+          "feature": "pass_type_Goal Kick",
+          "gain": 4.025628566741943,
+          "normalized_gain": 0.0033200190483293644
+        },
+        {
+          "feature": "body_part_Right Foot",
+          "gain": 3.86733078956604,
+          "normalized_gain": 0.0031894676010661756
+        },
+        {
+          "feature": "start_zone_defensive_left",
+          "gain": 3.8239970207214355,
+          "normalized_gain": 0.003153729346625969
+        },
+        {
+          "feature": "start_zone_middle_left",
+          "gain": 3.7545790672302246,
+          "normalized_gain": 0.0030964789262094158
+        },
+        {
+          "feature": "end_zone_attacking_right",
+          "gain": 3.5977954864501953,
+          "normalized_gain": 0.002967176267997146
+        },
+        {
+          "feature": "body_part_Drop Kick",
+          "gain": 3.47273850440979,
+          "normalized_gain": 0.0028640391912358007
+        },
+        {
+          "feature": "end_zone_middle_right",
+          "gain": 3.0153696537017822,
+          "normalized_gain": 0.0024868376508333685
+        },
+        {
+          "feature": "start_zone_middle_right",
+          "gain": 2.815438985824585,
+          "normalized_gain": 0.002321950698474841
+        },
+        {
+          "feature": "body_part_Other",
+          "gain": 2.799276351928711,
+          "normalized_gain": 0.0023086210403814953
+        },
+        {
+          "feature": "body_part_Left Foot",
+          "gain": 2.696369171142578,
+          "normalized_gain": 0.002223751362328623
+        },
+        {
+          "feature": "end_zone_middle_left",
+          "gain": 2.372741937637329,
+          "normalized_gain": 0.001956849296730171
+        },
+        {
+          "feature": "end_zone_defensive_right",
+          "gain": 1.8450076580047607,
+          "normalized_gain": 0.001521615933346495
+        },
+        {
+          "feature": "start_zone_defensive_right",
+          "gain": 1.7109014987945557,
+          "normalized_gain": 0.00141101581321755
+        },
+        {
+          "feature": "end_zone_defensive_left",
+          "gain": 1.262990951538086,
+          "normalized_gain": 0.001041614731079801
+        }
+      ]
+    }
+  },
+  "metrics": {
+    "validation": {
+      "logistic_regression": {
+        "roc_auc": 0.8875629163559875,
+        "log_loss": 0.3117504545850485,
+        "brier_score": 0.0989089551707705,
+        "accuracy": 0.8532690569448629,
+        "expected_calibration_error": 0.032613520447920194
+      },
+      "pytorch_mlp_uncalibrated": {
+        "roc_auc": 0.9159341984600109,
+        "log_loss": 0.2701541682479213,
+        "brier_score": 0.08499338124737954,
+        "accuracy": 0.8755649291955409,
+        "expected_calibration_error": 0.013521299485603246
+      },
+      "pytorch_mlp_effective": {
+        "roc_auc": 0.9159341984600109,
+        "log_loss": 0.2696740307484722,
+        "brier_score": 0.08496100417313532,
+        "accuracy": 0.8755649291955409,
+        "expected_calibration_error": 0.010925198198891251
+      },
+      "xgboost_uncalibrated": {
+        "roc_auc": 0.920994442669135,
+        "log_loss": 0.26150971182908933,
+        "brier_score": 0.08101450894377414,
+        "accuracy": 0.8840012051822839,
+        "expected_calibration_error": 0.010204766953319663
+      },
+      "xgboost_effective": {
+        "roc_auc": 0.920994442669135,
+        "log_loss": 0.26150971182908933,
+        "brier_score": 0.08101450894377414,
+        "accuracy": 0.8840012051822839,
+        "expected_calibration_error": 0.010204766953319663
+      }
+    },
+    "test": {
+      "selection_use": "none",
+      "logistic_regression": {
+        "roc_auc": 0.8786334798209483,
+        "log_loss": 0.27779373933666335,
+        "brier_score": 0.08244803345010615,
+        "accuracy": 0.889701139539884,
+        "expected_calibration_error": 0.0067375412111102565
+      },
+      "pytorch_mlp_uncalibrated": {
+        "roc_auc": 0.9017512160513677,
+        "log_loss": 0.2539883666826108,
+        "brier_score": 0.07496435292531953,
+        "accuracy": 0.8974414104493658,
+        "expected_calibration_error": 0.017260222633092348
+      },
+      "pytorch_mlp_effective": {
+        "roc_auc": 0.9017512160513677,
+        "log_loss": 0.25457277609389467,
+        "brier_score": 0.07475449343286988,
+        "accuracy": 0.8974414104493658,
+        "expected_calibration_error": 0.018107230744421332
+      },
+      "xgboost_uncalibrated": {
+        "roc_auc": 0.9157716266104342,
+        "log_loss": 0.2353630151368052,
+        "brier_score": 0.06908827786780011,
+        "accuracy": 0.9064717265104278,
+        "expected_calibration_error": 0.007250777055062633
+      },
+      "xgboost_effective": {
+        "roc_auc": 0.9157716266104342,
+        "log_loss": 0.2353630151368052,
+        "brier_score": 0.06908827786780011,
+        "accuracy": 0.9064717265104278,
+        "expected_calibration_error": 0.007250777055062633
+      },
+      "selected_model": {
+        "roc_auc": 0.9157716266104342,
+        "log_loss": 0.2353630151368052,
+        "brier_score": 0.06908827786780011,
+        "accuracy": 0.9064717265104278,
+        "expected_calibration_error": 0.007250777055062633
+      }
+    },
+    "out_of_fold": {
+      "roc_auc": 0.9220761851555327,
+      "log_loss": 0.23377613072664288,
+      "brier_score": 0.0705766414683141,
+      "accuracy": 0.9022797980313153,
+      "expected_calibration_error": 0.0040878181998831595
+    }
+  },
+  "selection": {
+    "model": "xgboost",
+    "source": "validation metrics only",
+    "reason": "lower validation log loss by 0.008164 versus pytorch_mlp",
+    "primary_metric": "validation log loss",
+    "tie_breaker": "validation Brier score",
+    "supporting_metric": "validation ROC-AUC",
+    "test_metrics_used": false
+  },
+  "out_of_fold": {
+    "model": "xgboost",
+    "fold_count": 5,
+    "prediction_count": 39214,
+    "grouping": "match_id",
+    "fixed_mlp_epochs": 16,
+    "fixed_xgboost_rounds": 315,
+    "folds": [
+      {
+        "fold": 1,
+        "train_match_count": 27,
+        "heldout_match_count": 7,
+        "model_fit_pass_count": 31244,
+        "calibration_match_count": 0,
+        "heldout_pass_count": 7970,
+        "heldout_match_ids": [
+          3895121,
+          3895182,
+          3895220,
+          3895244,
+          3895266,
+          3895286,
+          3895292
+        ],
+        "temperature": null
+      },
+      {
+        "fold": 2,
+        "train_match_count": 27,
+        "heldout_match_count": 7,
+        "model_fit_pass_count": 31484,
+        "calibration_match_count": 0,
+        "heldout_pass_count": 7730,
+        "heldout_match_ids": [
+          3895052,
+          3895086,
+          3895134,
+          3895158,
+          3895194,
+          3895202,
+          3895340
+        ],
+        "temperature": null
+      },
+      {
+        "fold": 3,
+        "train_match_count": 27,
+        "heldout_match_count": 7,
+        "model_fit_pass_count": 30886,
+        "calibration_match_count": 0,
+        "heldout_pass_count": 8328,
+        "heldout_match_ids": [
+          3895060,
+          3895067,
+          3895074,
+          3895095,
+          3895153,
+          3895167,
+          3895320
+        ],
+        "temperature": null
+      },
+      {
+        "fold": 4,
+        "train_match_count": 27,
+        "heldout_match_count": 7,
+        "model_fit_pass_count": 31211,
+        "calibration_match_count": 0,
+        "heldout_pass_count": 8003,
+        "heldout_match_ids": [
+          3895107,
+          3895210,
+          3895250,
+          3895258,
+          3895275,
+          3895309,
+          3895333
+        ],
+        "temperature": null
+      },
+      {
+        "fold": 5,
+        "train_match_count": 28,
+        "heldout_match_count": 6,
+        "model_fit_pass_count": 32031,
+        "calibration_match_count": 0,
+        "heldout_pass_count": 7183,
+        "heldout_match_ids": [
+          3895113,
+          3895139,
+          3895180,
+          3895232,
+          3895302,
+          3895348
+        ],
+        "temperature": null
+      }
+    ]
+  },
+  "production": {
+    "training_rows": 39214,
+    "evaluation_use": "none; full-data model is for future inference only",
+    "preprocessor": "models/pass_xgboost_preprocessor_final.joblib",
+    "encoded_feature_count": 50,
+    "model": "xgboost",
+    "model_path": "models/pass_xgboost_model.json",
+    "boosting_rounds": 315,
+    "temperature": 1.0,
+    "temperature_source": "not used"
+  },
+  "artifacts": {
+    "evaluation_preprocessor": "models/pass_preprocessor.joblib",
+    "evaluation_logistic_regression": "models/pass_logistic_regression.joblib",
+    "evaluation_pytorch_mlp": "models/pass_completion_model.pt",
+    "evaluation_mlp_history": "models/pass_mlp_history.json",
+    "evaluation_xgboost": "models/pass_xgboost_benchmark.json",
+    "evaluation_xgboost_preprocessor": "models/pass_xgboost_preprocessor.joblib",
+    "test_calibration_plot": "models/pass_model_calibration.png",
+    "test_predictions": "data/processed/pass_test_predictions.parquet",
+    "oof_predictions": "data/processed/pass_oof_predictions.parquet",
+    "production_preprocessor": "models/pass_xgboost_preprocessor_final.joblib",
+    "production_model": "models/pass_xgboost_model.json"
+  },
+  "downstream": {
+    "player_profiles_regenerated": true,
+    "player_similarities_regenerated": true,
+    "postgresql_reload_required": true
+  }
+}
+

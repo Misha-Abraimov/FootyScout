@@ -135,7 +135,7 @@ Set-Location backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[analytics,dev]"
 Copy-Item .env.example .env
 python -m alembic upgrade head
 ```
@@ -161,6 +161,61 @@ npm.cmd run dev
 - Frontend: <http://localhost:3000>
 - Backend: <http://localhost:8000>
 - Swagger UI: <http://localhost:8000/docs>
+
+## Deploy with Vercel Services
+
+FootyScout deploys as one Vercel project from the repository root. The checked-in
+`vercel.json` declares two Services:
+
+- `frontend`: the Next.js application rooted at `frontend/`
+- `backend`: the FastAPI application rooted at `backend/`, with `app.main:app` as
+  its entrypoint
+
+Requests under `/api/*`, plus `/health`, `/docs`, and `/openapi.json`, route to the
+backend Service. All remaining paths route to the frontend Service. In production,
+the browser uses these same-origin routes; do not set `NEXT_PUBLIC_API_URL` in
+Vercel. Local development continues to use the value in `frontend/.env.local`,
+normally `http://localhost:8000`.
+
+The production backend dependency set intentionally contains only the FastAPI,
+database, migration, and server packages needed to serve precomputed results. Use
+the `analytics` extra for local analytics and model rebuilds. Four small, frozen,
+API-facing metadata snapshots are packaged under `backend/app/runtime_metadata/`.
+Large Parquet datasets and model artifacts remain ignored and are not part of
+the serverless bundle.
+
+### Vercel project setup
+
+1. Commit and push the repository, then import or refresh it as a single Vercel
+   project. Keep the project Root Directory at the repository root; the Services
+   configuration owns the two application roots.
+2. Enable the Services framework if the project prompts for it. Do not create a
+   separate frontend project or backend project.
+3. Configure `DATABASE_URL` for Production (and Preview if desired) with a hosted
+   PostgreSQL SQLAlchemy URL using the `postgresql+psycopg://` driver. Never point a
+   Vercel deployment at `localhost`.
+4. Set `APP_ENV=production`. `APP_NAME` is optional. Production traffic is
+   same-origin, so no wildcard CORS setting is required; if an additional external
+   browser origin must call the API, set `CORS_ORIGINS` to an explicit JSON list of
+   trusted origins.
+5. Leave `NEXT_PUBLIC_API_URL` unset in Vercel. `VERCEL_URL` is supplied by Vercel
+   and is used only for server-rendered same-deployment requests.
+6. Apply Alembic migrations and load the validated snapshot into the hosted
+   database from a trusted environment before the first production smoke test:
+
+   ```powershell
+   Set-Location backend
+   $env:DATABASE_URL = "postgresql+psycopg://<user>:<password>@<host>/<database>"
+   python -m alembic upgrade head
+   python -m scripts.load_database
+   ```
+
+7. Deploy, then verify `/health`, `/docs`, `/openapi.json`, the main pages, and the
+   PostgreSQL-backed `/api/*` endpoints through the single deployment domain.
+
+The local Docker configuration remains unchanged on port `5433` with its established
+`scoutlens` database/user identifiers. Those compatibility-sensitive development
+identifiers are not production credentials and are not renamed by deployment setup.
 
 ## Rebuild the analytics snapshot
 

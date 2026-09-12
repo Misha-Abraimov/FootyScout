@@ -1,0 +1,617 @@
+{
+  "methodology_version": "V3.2C",
+  "purpose": "Position-relative playing-style archetypes; not quality, ability, or rank.",
+  "method": "K-Means",
+  "k": 2,
+  "cohort": "combined outfield",
+  "feature_order": [
+    "expected_completion_rate",
+    "pressure_pass_rate",
+    "progressive_pass_rate",
+    "long_pass_rate",
+    "positive_forward_distance_per_100_passes",
+    "carry_share_of_actions"
+  ],
+  "normalized_feature_order": [
+    "expected_completion_rate_position_z",
+    "pressure_pass_rate_position_z",
+    "progressive_pass_rate_position_z",
+    "long_pass_rate_position_z",
+    "positive_forward_distance_per_100_passes_position_z",
+    "carry_share_of_actions_position_z"
+  ],
+  "thresholds": {
+    "minimum_passes": 50,
+    "minimum_carries": 29,
+    "positions": [
+      "DEF",
+      "MID",
+      "FWD"
+    ],
+    "complete_case_required": true
+  },
+  "normalization": {
+    "method": "Population z-score within eligible broad position group",
+    "ddof": 0,
+    "by_position": {
+      "DEF": {
+        "expected_completion_rate": {
+          "mean": 0.8383407592773438,
+          "std": 0.058029789477586746
+        },
+        "pressure_pass_rate": {
+          "mean": 0.122953757860786,
+          "std": 0.055206300113190505
+        },
+        "progressive_pass_rate": {
+          "mean": 0.16230057915201904,
+          "std": 0.07247588327765009
+        },
+        "long_pass_rate": {
+          "mean": 0.1591542401034987,
+          "std": 0.06659878015497823
+        },
+        "positive_forward_distance_per_100_passes": {
+          "mean": 878.2105167481371,
+          "std": 243.05907720581516
+        },
+        "carry_share_of_actions": {
+          "mean": 0.43961494087263586,
+          "std": 0.02781902088250212
+        }
+      },
+      "MID": {
+        "expected_completion_rate": {
+          "mean": 0.8610909581184387,
+          "std": 0.04573730751872063
+        },
+        "pressure_pass_rate": {
+          "mean": 0.16630860219750593,
+          "std": 0.05758228676609854
+        },
+        "progressive_pass_rate": {
+          "mean": 0.12554152351002576,
+          "std": 0.06505502605485486
+        },
+        "long_pass_rate": {
+          "mean": 0.12415407188297699,
+          "std": 0.053616793464380315
+        },
+        "positive_forward_distance_per_100_passes": {
+          "mean": 592.0035457462424,
+          "std": 125.44352621563637
+        },
+        "carry_share_of_actions": {
+          "mean": 0.4556073820096665,
+          "std": 0.0354888280173174
+        }
+      },
+      "FWD": {
+        "expected_completion_rate": {
+          "mean": 0.7745515704154968,
+          "std": 0.05939799174666405
+        },
+        "pressure_pass_rate": {
+          "mean": 0.22907830821830466,
+          "std": 0.07780769522993011
+        },
+        "progressive_pass_rate": {
+          "mean": 0.19237327732279239,
+          "std": 0.10544172114311869
+        },
+        "long_pass_rate": {
+          "mean": 0.1419587305436157,
+          "std": 0.10466375927077366
+        },
+        "positive_forward_distance_per_100_passes": {
+          "mean": 565.1855595333919,
+          "std": 234.30891814940475
+        },
+        "carry_share_of_actions": {
+          "mean": 0.4591624705099963,
+          "std": 0.05747807345312126
+        }
+      }
+    }
+  },
+  "random_state": 42,
+  "n_init": 100,
+  "algorithm": "lloyd",
+  "training_cohort": {
+    "players": 133,
+    "product_players": 369,
+    "eligible_players": 133,
+    "ineligible_players": 236,
+    "position_composition": {
+      "DEF": 75,
+      "MID": 47,
+      "FWD": 11
+    }
+  },
+  "raw_cluster_to_archetype": {
+    "0": "direct_progressor",
+    "1": "safe_circulator"
+  },
+  "centroids": {
+    "direct_progressor": {
+      "expected_completion_rate": -0.692558842524886,
+      "pressure_pass_rate": -0.1815697619499384,
+      "progressive_pass_rate": 0.7598795640455562,
+      "long_pass_rate": 0.6502875504662524,
+      "positive_forward_distance_per_100_passes": 0.6783515771700757,
+      "carry_share_of_actions": -0.42967176548893016
+    },
+    "safe_circulator": {
+      "expected_completion_rate": 0.5692268284420444,
+      "pressure_pass_rate": 0.14923542078077143,
+      "progressive_pass_rate": -0.6245585457908679,
+      "long_pass_rate": -0.5344829181914403,
+      "positive_forward_distance_per_100_passes": -0.5575492415096516,
+      "carry_share_of_actions": 0.3531548757443261
+    }
+  },
+  "definitions": [
+    {
+      "id": "direct_progressor",
+      "name": "Direct Progressor",
+      "description": "A position-relative passing style oriented toward progressive, longer, and direct forward distribution, generally through more difficult attempted passes.",
+      "raw_cluster_id": 0,
+      "centroid": {
+        "expected_completion_rate": -0.692558842524886,
+        "pressure_pass_rate": -0.1815697619499384,
+        "progressive_pass_rate": 0.7598795640455562,
+        "long_pass_rate": 0.6502875504662524,
+        "positive_forward_distance_per_100_passes": 0.6783515771700757,
+        "carry_share_of_actions": -0.42967176548893016
+      },
+      "distinguishing_features": [
+        {
+          "feature_name": "progressive_pass_rate",
+          "label": "Progressive-pass rate",
+          "position_z": 0.7598795640455562,
+          "direction": "higher"
+        },
+        {
+          "feature_name": "expected_completion_rate",
+          "label": "Expected completion",
+          "position_z": -0.692558842524886,
+          "direction": "lower"
+        },
+        {
+          "feature_name": "positive_forward_distance_per_100_passes",
+          "label": "Positive forward distance / 100 passes",
+          "position_z": 0.6783515771700757,
+          "direction": "higher"
+        },
+        {
+          "feature_name": "long_pass_rate",
+          "label": "Long-pass rate",
+          "position_z": 0.6502875504662524,
+          "direction": "higher"
+        }
+      ],
+      "player_count": 60,
+      "position_composition": {
+        "DEF": {
+          "count": 35,
+          "percentage": 58.333333333333336
+        },
+        "MID": {
+          "count": 20,
+          "percentage": 33.333333333333336
+        },
+        "FWD": {
+          "count": 5,
+          "percentage": 8.333333333333334
+        }
+      },
+      "representative_players": [
+        {
+          "player_id": 15797,
+          "player_name": "Matthias Bader",
+          "team_name": "Darmstadt 98",
+          "position_group": "DEF",
+          "centroid_distance": 0.6998559568150019
+        },
+        {
+          "player_id": 8808,
+          "player_name": "Matthias Ginter",
+          "team_name": "Freiburg",
+          "position_group": "DEF",
+          "centroid_distance": 0.8165022590125095
+        },
+        {
+          "player_id": 29682,
+          "player_name": "Rasmus Carstensen",
+          "team_name": "FC K\u00f6ln",
+          "position_group": "DEF",
+          "centroid_distance": 1.158846850068343
+        },
+        {
+          "player_id": 363583,
+          "player_name": "Brajan Gruda",
+          "team_name": "FSV Mainz 05",
+          "position_group": "FWD",
+          "centroid_distance": 1.2203554247839814
+        },
+        {
+          "player_id": 12299,
+          "player_name": "Marvin Ducksch",
+          "team_name": "Werder Bremen",
+          "position_group": "FWD",
+          "centroid_distance": 1.2346916634997234
+        }
+      ],
+      "separation_distribution": {
+        "minimum": 0.07107425222809088,
+        "p10": 0.0829498349642159,
+        "p25": 0.2310706674571248,
+        "median": 0.3549660213555096,
+        "p75": 0.465123423674495,
+        "p90": 0.5786971347594606,
+        "maximum": 0.766634482391826
+      }
+    },
+    {
+      "id": "safe_circulator",
+      "name": "Safe Circulator",
+      "description": "A position-relative circulation style built around safer attempted passes, less direct progression, and relatively greater carry involvement in this cohort.",
+      "raw_cluster_id": 1,
+      "centroid": {
+        "expected_completion_rate": 0.5692268284420444,
+        "pressure_pass_rate": 0.14923542078077143,
+        "progressive_pass_rate": -0.6245585457908679,
+        "long_pass_rate": -0.5344829181914403,
+        "positive_forward_distance_per_100_passes": -0.5575492415096516,
+        "carry_share_of_actions": 0.3531548757443261
+      },
+      "distinguishing_features": [
+        {
+          "feature_name": "progressive_pass_rate",
+          "label": "Progressive-pass rate",
+          "position_z": -0.6245585457908679,
+          "direction": "lower"
+        },
+        {
+          "feature_name": "expected_completion_rate",
+          "label": "Expected completion",
+          "position_z": 0.5692268284420444,
+          "direction": "higher"
+        },
+        {
+          "feature_name": "positive_forward_distance_per_100_passes",
+          "label": "Positive forward distance / 100 passes",
+          "position_z": -0.5575492415096516,
+          "direction": "lower"
+        },
+        {
+          "feature_name": "long_pass_rate",
+          "label": "Long-pass rate",
+          "position_z": -0.5344829181914403,
+          "direction": "lower"
+        }
+      ],
+      "player_count": 73,
+      "position_composition": {
+        "DEF": {
+          "count": 40,
+          "percentage": 54.794520547945204
+        },
+        "MID": {
+          "count": 27,
+          "percentage": 36.986301369863014
+        },
+        "FWD": {
+          "count": 6,
+          "percentage": 8.219178082191782
+        }
+      },
+      "representative_players": [
+        {
+          "player_id": 33088,
+          "player_name": "Lucas Silva Melo",
+          "team_name": "Eintracht Frankfurt",
+          "position_group": "DEF",
+          "centroid_distance": 0.5142494505559698
+        },
+        {
+          "player_id": 49337,
+          "player_name": "Josip Stani\u0161i\u0107",
+          "team_name": "Bayer Leverkusen",
+          "position_group": "DEF",
+          "centroid_distance": 0.563314416035196
+        },
+        {
+          "player_id": 13292,
+          "player_name": "Kevin Akpoguma",
+          "team_name": "Hoffenheim",
+          "position_group": "DEF",
+          "centroid_distance": 0.7113028971194094
+        },
+        {
+          "player_id": 140589,
+          "player_name": "Aleksandar Pavlovi\u0107",
+          "team_name": "Bayern Munich",
+          "position_group": "MID",
+          "centroid_distance": 0.8517107756213553
+        },
+        {
+          "player_id": 27133,
+          "player_name": "Odilon Kossonou",
+          "team_name": "Bayer Leverkusen",
+          "position_group": "DEF",
+          "centroid_distance": 0.8624651291651865
+        }
+      ],
+      "separation_distribution": {
+        "minimum": 0.02094188069975109,
+        "p10": 0.1333757539831727,
+        "p25": 0.27604568743554253,
+        "median": 0.4534688300178798,
+        "p75": 0.590117926404312,
+        "p90": 0.6735052552095838,
+        "maximum": 0.8165235171719456
+      }
+    }
+  ],
+  "separation_formula": "(second_centroid_distance - centroid_distance) / max(second_centroid_distance, 1e-12)",
+  "separation_interpretation": "Distance-based style separation, not a probability. Smaller values indicate a player lies nearer the boundary between the two archetypes.",
+  "overall_separation_distribution": {
+    "minimum": 0.02094188069975109,
+    "p10": 0.10505940296215249,
+    "p25": 0.2555391312654416,
+    "median": 0.3884711760686981,
+    "p75": 0.5525110602597716,
+    "p90": 0.6457717158673569,
+    "maximum": 0.8165235171719456
+  },
+  "omitted_feature": {
+    "feature_name": "final_third_entries_per_100_passes",
+    "reason": "V3.2A found weak split-half stability and V3.2B found improved internal separation after removal while resample/player stability remained similar."
+  },
+  "selection_history": {
+    "methods_evaluated": [
+      "K-Means",
+      "Gaussian mixture model",
+      "Ward"
+    ],
+    "k_values_evaluated": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "selected_before_production_refinement": "K-Means k=2",
+    "six_feature_sensitivity": {
+      "excluded_feature": "final_third_entries_per_100_passes_position_z",
+      "method": "kmeans",
+      "k": 2,
+      "silhouette": 0.2553680410256655,
+      "davies_bouldin": 1.4544088147799585,
+      "calinski_harabasz": 54.96647052962806,
+      "cluster_sizes": {
+        "1": 60,
+        "2": 73
+      },
+      "small_cluster_concern": false,
+      "position_adjusted_rand": -0.008432799416928595,
+      "position_normalized_mutual_information": 0.0009408342014339292,
+      "position_composition": {
+        "1": {
+          "counts": {
+            "DEF": 35,
+            "MID": 20,
+            "FWD": 5
+          },
+          "percentages": {
+            "DEF": 58.333333333333336,
+            "MID": 33.333333333333336,
+            "FWD": 8.333333333333334
+          }
+        },
+        "2": {
+          "counts": {
+            "DEF": 40,
+            "MID": 27,
+            "FWD": 6
+          },
+          "percentages": {
+            "DEF": 54.794520547945204,
+            "MID": 36.986301369863014,
+            "FWD": 8.219178082191782
+          }
+        }
+      },
+      "repeated_seed_stability": {
+        "seeds": 25,
+        "reference_seed": 42,
+        "mean_ari": 1.0,
+        "median_ari": 1.0,
+        "minimum_ari": 1.0
+      },
+      "resample_stability": {
+        "resamples": 100,
+        "sample_fraction": 0.8,
+        "sample_size": 106,
+        "mean_ari": 0.888259496859369,
+        "median_ari": 0.9252442195198971,
+        "minimum_ari": 0.594610931578825,
+        "cluster_assignment_stability": {
+          "1": 0.9637848021770986,
+          "2": 0.9763008758371973
+        },
+        "player_assignment_stability": [
+          0.9873417721518988,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8690476190476191,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8765432098765432,
+          1.0,
+          0.6,
+          0.9753086419753086,
+          1.0,
+          1.0,
+          0.8533333333333334,
+          0.7380952380952381,
+          0.7837837837837838,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8823529411764706,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.7317073170731707,
+          1.0,
+          1.0,
+          0.9594594594594594,
+          1.0,
+          1.0,
+          1.0,
+          0.8170731707317073,
+          0.9873417721518988,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8780487804878049,
+          1.0,
+          1.0,
+          1.0,
+          0.9759036144578314,
+          1.0,
+          1.0,
+          0.7228915662650602,
+          0.7073170731707317,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8591549295774648,
+          1.0,
+          1.0,
+          0.9882352941176471,
+          1.0,
+          1.0,
+          0.9466666666666667,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9868421052631579,
+          0.9024390243902439,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9058823529411765,
+          1.0,
+          1.0,
+          1.0,
+          0.9,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.7564102564102564,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.8,
+          1.0,
+          0.9240506329113924,
+          1.0,
+          1.0,
+          0.7857142857142857,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "player_assignment_stability_summary": {
+          "mean": 0.970683795798723,
+          "median": 1.0,
+          "minimum": 0.6
+        }
+      },
+      "features": [
+        "expected_completion_rate_position_z",
+        "pressure_pass_rate_position_z",
+        "progressive_pass_rate_position_z",
+        "long_pass_rate_position_z",
+        "positive_forward_distance_per_100_passes_position_z",
+        "carry_share_of_actions_position_z"
+      ],
+      "assignment_ari_vs_seven_features": 0.8541793398512826,
+      "centroids": {
+        "1": {
+          "expected_completion_rate": -0.6925592659662168,
+          "pressure_pass_rate": -0.1815697619499384,
+          "progressive_pass_rate": 0.7598795640455562,
+          "long_pass_rate": 0.6502875504662524,
+          "positive_forward_distance_per_100_passes": 0.6783515771700757,
+          "carry_share_of_actions": -0.42967176548892977
+        },
+        "2": {
+          "expected_completion_rate": 0.5692264298104668,
+          "pressure_pass_rate": 0.14923542078077154,
+          "progressive_pass_rate": -0.6245585457908679,
+          "long_pass_rate": -0.5344829181914403,
+          "positive_forward_distance_per_100_passes": -0.5575492415096513,
+          "carry_share_of_actions": 0.3531548757443265
+        }
+      }
+    },
+    "interpretation_caution": "Internal clustering diagnostics support a useful descriptive partition; they do not prove objectively true football roles."
+  },
+  "eligibility_reason_for_unassigned": "Limited sample for archetype analysis"
+}
+

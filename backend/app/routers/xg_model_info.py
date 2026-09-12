@@ -1,16 +1,16 @@
 """Public, path-safe methodology metadata for the expected-goals model."""
 
 import json
-from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import ValidationError
 
+from app.runtime_metadata import XG_MODEL_METADATA_PATH
 from app.schemas import XGModelInfoResponse
 
 router = APIRouter(prefix="/api/models/xg", tags=["models"])
-METADATA_PATH = Path(__file__).resolve().parents[3] / "models" / "xg_model_metadata.json"
+METADATA_PATH = XG_MODEL_METADATA_PATH
 
 
 def build_xg_model_info(raw: dict[str, Any]) -> XGModelInfoResponse:

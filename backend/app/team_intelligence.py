@@ -7,7 +7,6 @@ import json
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from analytics.team_role_research import DESCRIPTIVE_FEATURES, FIT_FEATURES
 from app.models import Player, PlayerRoleFit, TeamRoleProfile, TeamStyleProfile
 from app.presenters import player_identity
 from app.schemas import (
@@ -20,6 +19,7 @@ from app.schemas import (
     TeamRolesResponse,
     TeamStyleResponse,
 )
+from app.team_feature_contract import DESCRIPTIVE_FEATURES, FIT_FEATURES
 
 FEATURE_LABELS = {
     "expected_completion_rate": "Expected completion",

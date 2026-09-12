@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import json
 from functools import lru_cache
-from pathlib import Path
 from typing import Any
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.models import Player, PlayerArchetype, PlayerAttackingProfile
+from app.runtime_metadata import PLAYER_ARCHETYPE_METADATA_PATH
 from app.schemas import (
     ArchetypeCatalogueResponse,
     ArchetypeDefinitionResponse,
@@ -21,8 +21,7 @@ from app.schemas import (
     PlayerArchetypeResponse,
 )
 
-ROOT = Path(__file__).resolve().parents[2]
-METADATA_PATH = ROOT / "models" / "player_archetype_metadata.json"
+METADATA_PATH = PLAYER_ARCHETYPE_METADATA_PATH
 PASS_THRESHOLD = 50
 CARRY_THRESHOLD = 29
 METHODOLOGY_VERSION = "V3.2C"

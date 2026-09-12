@@ -1,12 +1,12 @@
 """Curated public model-methodology information."""
 
 import json
-from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import ValidationError
 
+from app.runtime_metadata import PASS_MODEL_METADATA_PATH
 from app.schemas import (
     DatasetSummary,
     ModelInfoResponse,
@@ -21,7 +21,7 @@ from app.schemas import (
 )
 
 router = APIRouter(prefix="/api/model", tags=["model"])
-MODEL_METADATA_PATH = Path(__file__).resolve().parents[3] / "models" / "pass_model_metadata.json"
+MODEL_METADATA_PATH = PASS_MODEL_METADATA_PATH
 
 
 def _metric_map(raw_metrics: dict[str, Any]) -> dict[str, ModelMetrics]:

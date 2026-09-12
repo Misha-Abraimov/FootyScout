@@ -1,16 +1,16 @@
 """Public, path-safe methodology metadata for attacking action value."""
 
 import json
-from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import ValidationError
 
+from app.runtime_metadata import ACTION_VALUE_MODEL_METADATA_PATH
 from app.schemas import ActionValueModelInfoResponse
 
 router = APIRouter(prefix="/api/models/action-value", tags=["models"])
-METADATA_PATH = Path(__file__).resolve().parents[3] / "models" / "action_value_model_metadata.json"
+METADATA_PATH = ACTION_VALUE_MODEL_METADATA_PATH
 
 
 def build_action_value_info(raw: dict[str, Any]) -> ActionValueModelInfoResponse:

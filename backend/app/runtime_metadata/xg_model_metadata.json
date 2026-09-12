@@ -1,0 +1,814 @@
+{
+  "task_name": "Expected goals",
+  "selected_model": "xgboost",
+  "selection": {
+    "primary_metric": "validation_log_loss",
+    "secondary_metrics": [
+      "brier_score",
+      "roc_auc",
+      "expected_calibration_error",
+      "accuracy"
+    ],
+    "reason": "lowest validation log loss, 0.025238 below logistic_regression",
+    "test_metrics_used": false
+  },
+  "features": [
+    "shot_x",
+    "shot_y",
+    "distance_to_goal",
+    "angle_to_goal",
+    "under_pressure",
+    "first_time",
+    "one_on_one",
+    "open_goal",
+    "body_part",
+    "shot_type",
+    "technique",
+    "play_pattern"
+  ],
+  "preprocessing": {
+    "numeric": "median imputation then standard scaling",
+    "boolean": "omitted StatsBomb flags normalized false; most-frequent fallback",
+    "categorical": "Unknown fill and one-hot encoding with unseen categories ignored",
+    "evaluation_fit_split": "training matches only",
+    "oof_fit_policy": "fit independently inside each outer training fold",
+    "encoded_feature_count": 31
+  },
+  "penalty_policy": "penalties and period-5 shootout shots are preserved but excluded from modeling and player aggregates",
+  "dataset": {
+    "matches": 233,
+    "shots": 5784,
+    "goals": 685,
+    "penalties": 239,
+    "penalty_shootout_shots": 164,
+    "eligible_non_penalty_shots": 5545,
+    "eligible_non_penalty_goals": 513,
+    "corpus": [
+      {
+        "competition_id": 9,
+        "season_id": 281,
+        "matches": 34,
+        "shots": 916,
+        "goals": 110
+      },
+      {
+        "competition_id": 43,
+        "season_id": 106,
+        "matches": 64,
+        "shots": 1494,
+        "goals": 195
+      },
+      {
+        "competition_id": 55,
+        "season_id": 282,
+        "matches": 51,
+        "shots": 1340,
+        "goals": 126
+      },
+      {
+        "competition_id": 223,
+        "season_id": 282,
+        "matches": 32,
+        "shots": 790,
+        "goals": 95
+      },
+      {
+        "competition_id": 1267,
+        "season_id": 107,
+        "matches": 52,
+        "shots": 1244,
+        "goals": 159
+      }
+    ]
+  },
+  "split": {
+    "method": "match-grouped deterministic approximately 80/10/10 split",
+    "random_seed": 42,
+    "train": {
+      "match_count": 186,
+      "shot_count": 4458,
+      "goal_count": 414,
+      "goal_rate": 0.09286675639300135,
+      "competition_seasons": [
+        {
+          "competition_id": 9,
+          "season_id": 281,
+          "shot_count": 796
+        },
+        {
+          "competition_id": 43,
+          "season_id": 106,
+          "shot_count": 1139
+        },
+        {
+          "competition_id": 55,
+          "season_id": 282,
+          "shot_count": 1056
+        },
+        {
+          "competition_id": 223,
+          "season_id": 282,
+          "shot_count": 561
+        },
+        {
+          "competition_id": 1267,
+          "season_id": 107,
+          "shot_count": 906
+        }
+      ]
+    },
+    "validation": {
+      "match_count": 23,
+      "shot_count": 543,
+      "goal_count": 52,
+      "goal_rate": 0.09576427255985268,
+      "competition_seasons": [
+        {
+          "competition_id": 9,
+          "season_id": 281,
+          "shot_count": 90
+        },
+        {
+          "competition_id": 43,
+          "season_id": 106,
+          "shot_count": 92
+        },
+        {
+          "competition_id": 55,
+          "season_id": 282,
+          "shot_count": 104
+        },
+        {
+          "competition_id": 223,
+          "season_id": 282,
+          "shot_count": 144
+        },
+        {
+          "competition_id": 1267,
+          "season_id": 107,
+          "shot_count": 113
+        }
+      ]
+    },
+    "test": {
+      "match_count": 24,
+      "shot_count": 544,
+      "goal_count": 47,
+      "goal_rate": 0.08639705882352941,
+      "competition_seasons": [
+        {
+          "competition_id": 9,
+          "season_id": 281,
+          "shot_count": 22
+        },
+        {
+          "competition_id": 43,
+          "season_id": 106,
+          "shot_count": 199
+        },
+        {
+          "competition_id": 55,
+          "season_id": 282,
+          "shot_count": 144
+        },
+        {
+          "competition_id": 223,
+          "season_id": 282,
+          "shot_count": 36
+        },
+        {
+          "competition_id": 1267,
+          "season_id": 107,
+          "shot_count": 143
+        }
+      ]
+    },
+    "train_match_ids": [
+      3857254,
+      3857255,
+      3857256,
+      3857257,
+      3857258,
+      3857259,
+      3857260,
+      3857261,
+      3857262,
+      3857265,
+      3857266,
+      3857267,
+      3857268,
+      3857271,
+      3857274,
+      3857275,
+      3857276,
+      3857277,
+      3857280,
+      3857281,
+      3857282,
+      3857283,
+      3857285,
+      3857286,
+      3857287,
+      3857288,
+      3857289,
+      3857290,
+      3857291,
+      3857292,
+      3857293,
+      3857294,
+      3857295,
+      3857296,
+      3857297,
+      3857298,
+      3857300,
+      3857301,
+      3869117,
+      3869118,
+      3869151,
+      3869152,
+      3869219,
+      3869220,
+      3869253,
+      3869321,
+      3869354,
+      3869420,
+      3869486,
+      3869552,
+      3869684,
+      3869685,
+      3895052,
+      3895060,
+      3895067,
+      3895074,
+      3895095,
+      3895107,
+      3895113,
+      3895121,
+      3895134,
+      3895139,
+      3895158,
+      3895167,
+      3895180,
+      3895194,
+      3895202,
+      3895210,
+      3895220,
+      3895244,
+      3895258,
+      3895266,
+      3895275,
+      3895286,
+      3895292,
+      3895302,
+      3895309,
+      3895320,
+      3895333,
+      3895340,
+      3895348,
+      3920384,
+      3920385,
+      3920386,
+      3920388,
+      3920389,
+      3920391,
+      3920392,
+      3920393,
+      3920394,
+      3920396,
+      3920398,
+      3920399,
+      3920400,
+      3920401,
+      3920402,
+      3920403,
+      3920404,
+      3920405,
+      3920407,
+      3920408,
+      3920409,
+      3920410,
+      3920411,
+      3920413,
+      3920414,
+      3920415,
+      3920416,
+      3920417,
+      3920419,
+      3922237,
+      3922238,
+      3922239,
+      3922240,
+      3922242,
+      3922243,
+      3922244,
+      3922321,
+      3922658,
+      3922659,
+      3923881,
+      3930158,
+      3930159,
+      3930160,
+      3930161,
+      3930164,
+      3930165,
+      3930166,
+      3930167,
+      3930168,
+      3930169,
+      3930170,
+      3930171,
+      3930173,
+      3930174,
+      3930175,
+      3930176,
+      3930177,
+      3930179,
+      3930180,
+      3930181,
+      3930182,
+      3930183,
+      3938637,
+      3938638,
+      3938639,
+      3938640,
+      3938641,
+      3938643,
+      3938644,
+      3939970,
+      3939971,
+      3939972,
+      3939973,
+      3939974,
+      3939975,
+      3939976,
+      3939977,
+      3939979,
+      3939980,
+      3939982,
+      3939985,
+      3939986,
+      3939987,
+      3939988,
+      3939989,
+      3939992,
+      3940878,
+      3940983,
+      3941017,
+      3941018,
+      3941019,
+      3941020,
+      3942226,
+      3942228,
+      3942229,
+      3942349,
+      3942382,
+      3942415,
+      3942416,
+      3942752,
+      3942785,
+      3942819,
+      3942852,
+      3943043,
+      3943077
+    ],
+    "validation_match_ids": [
+      3857264,
+      3857272,
+      3857279,
+      3869519,
+      3895153,
+      3895182,
+      3895232,
+      3895250,
+      3920387,
+      3920390,
+      3922241,
+      3922356,
+      3923880,
+      3930162,
+      3930178,
+      3930184,
+      3939969,
+      3939981,
+      3939983,
+      3939990,
+      3939991,
+      3941021,
+      3943076
+    ],
+    "test_match_ids": [
+      3857263,
+      3857269,
+      3857270,
+      3857273,
+      3857278,
+      3857284,
+      3857299,
+      3869254,
+      3895086,
+      3920395,
+      3920397,
+      3920406,
+      3920412,
+      3920418,
+      3922837,
+      3922838,
+      3930163,
+      3930172,
+      3938642,
+      3938645,
+      3939978,
+      3939984,
+      3941022,
+      3942227
+    ]
+  },
+  "benchmarks": {
+    "logistic_regression": {
+      "parameters": {
+        "C": 1.0,
+        "max_iter": 2000
+      }
+    },
+    "xgboost_candidates": [
+      {
+        "name": "xgboost_candidate_1",
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "random_state": 42,
+          "max_depth": 2,
+          "learning_rate": 0.04,
+          "n_estimators": 900,
+          "min_child_weight": 8.0,
+          "subsample": 0.85,
+          "colsample_bytree": 0.85,
+          "reg_alpha": 0.0,
+          "reg_lambda": 3.0,
+          "early_stopping_rounds": 40
+        },
+        "boosting_rounds": 76,
+        "validation_metrics": {
+          "roc_auc": 0.7056634811217297,
+          "log_loss": 0.291074551076333,
+          "brier_score": 0.08128252135888085,
+          "accuracy": 0.9042357274401474,
+          "expected_calibration_error": 0.021559340526001666
+        }
+      },
+      {
+        "name": "xgboost_candidate_2",
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "random_state": 42,
+          "max_depth": 3,
+          "learning_rate": 0.035,
+          "n_estimators": 1100,
+          "min_child_weight": 10.0,
+          "subsample": 0.9,
+          "colsample_bytree": 0.9,
+          "reg_alpha": 0.05,
+          "reg_lambda": 4.0,
+          "early_stopping_rounds": 40
+        },
+        "boosting_rounds": 56,
+        "validation_metrics": {
+          "roc_auc": 0.7169630267899108,
+          "log_loss": 0.2882904079368382,
+          "brier_score": 0.08100457538236795,
+          "accuracy": 0.9042357274401474,
+          "expected_calibration_error": 0.03555852198084854
+        }
+      },
+      {
+        "name": "xgboost_candidate_3",
+        "parameters": {
+          "objective": "binary:logistic",
+          "eval_metric": "logloss",
+          "tree_method": "hist",
+          "random_state": 42,
+          "max_depth": 4,
+          "learning_rate": 0.025,
+          "n_estimators": 1400,
+          "min_child_weight": 12.0,
+          "subsample": 0.9,
+          "colsample_bytree": 0.85,
+          "reg_alpha": 0.1,
+          "reg_lambda": 6.0,
+          "early_stopping_rounds": 40
+        },
+        "boosting_rounds": 96,
+        "validation_metrics": {
+          "roc_auc": 0.7219371768760772,
+          "log_loss": 0.2858635572644918,
+          "brier_score": 0.08058182208087211,
+          "accuracy": 0.9042357274401474,
+          "expected_calibration_error": 0.03764708167281598
+        }
+      }
+    ]
+  },
+  "selected_parameters": {
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "random_state": 42,
+    "max_depth": 4,
+    "learning_rate": 0.025,
+    "n_estimators": 1400,
+    "min_child_weight": 12.0,
+    "subsample": 0.9,
+    "colsample_bytree": 0.85,
+    "reg_alpha": 0.1,
+    "reg_lambda": 6.0,
+    "early_stopping_rounds": 40
+  },
+  "selected_boosting_rounds": 96,
+  "metrics": {
+    "validation": {
+      "logistic_regression": {
+        "roc_auc": 0.6928951903493655,
+        "log_loss": 0.31110125261371874,
+        "brier_score": 0.08373337086751087,
+        "accuracy": 0.9023941068139963,
+        "expected_calibration_error": 0.01894518064385727
+      },
+      "xgboost_candidate_1": {
+        "roc_auc": 0.7056634811217297,
+        "log_loss": 0.291074551076333,
+        "brier_score": 0.08128252135888085,
+        "accuracy": 0.9042357274401474,
+        "expected_calibration_error": 0.021559340526001666
+      },
+      "xgboost_candidate_2": {
+        "roc_auc": 0.7169630267899108,
+        "log_loss": 0.2882904079368382,
+        "brier_score": 0.08100457538236795,
+        "accuracy": 0.9042357274401474,
+        "expected_calibration_error": 0.03555852198084854
+      },
+      "xgboost_candidate_3": {
+        "roc_auc": 0.7219371768760772,
+        "log_loss": 0.2858635572644918,
+        "brier_score": 0.08058182208087211,
+        "accuracy": 0.9042357274401474,
+        "expected_calibration_error": 0.03764708167281598
+      },
+      "selected_effective": {
+        "roc_auc": 0.7219371768760772,
+        "log_loss": 0.28586355670996233,
+        "brier_score": 0.08058182182505542,
+        "accuracy": 0.9042357274401474,
+        "expected_calibration_error": 0.037647081717618575
+      }
+    },
+    "untouched_test": {
+      "logistic_regression": {
+        "roc_auc": 0.7993920972644376,
+        "log_loss": 0.23545523069532556,
+        "brier_score": 0.06332529089048483,
+        "accuracy": 0.9246323529411765,
+        "expected_calibration_error": 0.01685251427300702
+      },
+      "xgboost": {
+        "roc_auc": 0.768697290123721,
+        "log_loss": 0.2507239261480622,
+        "brier_score": 0.06925841866981548,
+        "accuracy": 0.9136029411764706,
+        "expected_calibration_error": 0.019180309438310998
+      },
+      "selected_effective": {
+        "roc_auc": 0.768697290123721,
+        "log_loss": 0.2507239266443189,
+        "brier_score": 0.06925841880477776,
+        "accuracy": 0.9136029411764706,
+        "expected_calibration_error": 0.019180309556890547
+      }
+    },
+    "out_of_fold": {
+      "roc_auc": 0.7528267431518205,
+      "log_loss": 0.270325411992442,
+      "brier_score": 0.07603004505655847,
+      "accuracy": 0.9074842200180343,
+      "expected_calibration_error": 0.010156768697378934
+    }
+  },
+  "calibration": {
+    "method": "temperature_scaling_on_raw_margin",
+    "fit_split": "validation",
+    "temperature": 0.9943343632522449,
+    "retained": false,
+    "retention_rule": "validation log loss improves >= 0.001; Brier improves >= 0.0002; ECE worsens by no more than 0.002",
+    "reason": "not retained: the conservative material-improvement rule was not satisfied",
+    "uncalibrated_validation_metrics": {
+      "roc_auc": 0.7219371768760772,
+      "log_loss": 0.28586355670996233,
+      "brier_score": 0.08058182182505542,
+      "accuracy": 0.9042357274401474,
+      "expected_calibration_error": 0.037647081717618575
+    },
+    "calibrated_validation_metrics": {
+      "roc_auc": 0.7219371768760772,
+      "log_loss": 0.28585753018199495,
+      "brier_score": 0.08058341440491806,
+      "accuracy": 0.9042357274401474,
+      "expected_calibration_error": 0.03775805207954507
+    },
+    "uncalibrated_validation_curve": [
+      {
+        "bin": 1,
+        "count": 356,
+        "weight": 0.6556169429097606,
+        "mean_probability": 0.051639371548437764,
+        "observed_rate": 0.042134831460674156
+      },
+      {
+        "bin": 2,
+        "count": 133,
+        "weight": 0.24493554327808473,
+        "mean_probability": 0.1412608831739663,
+        "observed_rate": 0.19548872180451127
+      },
+      {
+        "bin": 3,
+        "count": 33,
+        "weight": 0.06077348066298342,
+        "mean_probability": 0.25005496754731604,
+        "observed_rate": 0.06060606060606061
+      },
+      {
+        "bin": 4,
+        "count": 19,
+        "weight": 0.034990791896869246,
+        "mean_probability": 0.3291098657756569,
+        "observed_rate": 0.47368421052631576
+      },
+      {
+        "bin": 5,
+        "count": 2,
+        "weight": 0.003683241252302026,
+        "mean_probability": 0.4238600421183065,
+        "observed_rate": 0.0
+      }
+    ],
+    "calibrated_validation_curve": [
+      {
+        "bin": 1,
+        "count": 359,
+        "weight": 0.6611418047882136,
+        "mean_probability": 0.05126697820701972,
+        "observed_rate": 0.04178272980501393
+      },
+      {
+        "bin": 2,
+        "count": 131,
+        "weight": 0.24125230202578268,
+        "mean_probability": 0.14142785189358587,
+        "observed_rate": 0.1984732824427481
+      },
+      {
+        "bin": 3,
+        "count": 32,
+        "weight": 0.058931860036832415,
+        "mean_probability": 0.250441184531312,
+        "observed_rate": 0.0625
+      },
+      {
+        "bin": 4,
+        "count": 19,
+        "weight": 0.034990791896869246,
+        "mean_probability": 0.3282189563067379,
+        "observed_rate": 0.47368421052631576
+      },
+      {
+        "bin": 5,
+        "count": 2,
+        "weight": 0.003683241252302026,
+        "mean_probability": 0.4234339828793406,
+        "observed_rate": 0.0
+      }
+    ]
+  },
+  "oof": {
+    "fold_count": 5,
+    "prediction_count": 5545,
+    "unique_shots": 5545,
+    "missing_predictions": 0,
+    "duplicate_shots": 0,
+    "probability_min": 0.026448721093068013,
+    "probability_max": 0.49768363944585736,
+    "group_integrity": true
+  },
+  "feature_importance": {
+    "type": "gain",
+    "interpretation": "model feature importance, not causal effects",
+    "features": [
+      {
+        "feature": "angle_to_goal",
+        "gain": 22.605695724487305,
+        "normalized_gain": 0.19120881627506278
+      },
+      {
+        "feature": "body_part_Head",
+        "gain": 16.003597259521484,
+        "normalized_gain": 0.13536539310405776
+      },
+      {
+        "feature": "distance_to_goal",
+        "gain": 13.758899688720703,
+        "normalized_gain": 0.1163787637766801
+      },
+      {
+        "feature": "one_on_one",
+        "gain": 9.239790916442871,
+        "normalized_gain": 0.0781541742972473
+      },
+      {
+        "feature": "play_pattern_From Counter",
+        "gain": 7.001202583312988,
+        "normalized_gain": 0.05921921956186772
+      },
+      {
+        "feature": "body_part_Right Foot",
+        "gain": 6.97498893737793,
+        "normalized_gain": 0.058997493131919064
+      },
+      {
+        "feature": "under_pressure",
+        "gain": 6.609493732452393,
+        "normalized_gain": 0.05590597556308262
+      },
+      {
+        "feature": "body_part_Left Foot",
+        "gain": 5.8872785568237305,
+        "normalized_gain": 0.0497971651769349
+      },
+      {
+        "feature": "technique_Normal",
+        "gain": 5.263587951660156,
+        "normalized_gain": 0.044521718502403974
+      },
+      {
+        "feature": "play_pattern_From Corner",
+        "gain": 5.037839412689209,
+        "normalized_gain": 0.042612239075690214
+      },
+      {
+        "feature": "shot_x",
+        "gain": 4.707222938537598,
+        "normalized_gain": 0.03981574099688587
+      },
+      {
+        "feature": "first_time",
+        "gain": 3.739496946334839,
+        "normalized_gain": 0.031630293236158
+      },
+      {
+        "feature": "technique_Half Volley",
+        "gain": 3.0199317932128906,
+        "normalized_gain": 0.02554389789411185
+      },
+      {
+        "feature": "shot_y",
+        "gain": 2.5098469257354736,
+        "normalized_gain": 0.02122937800943835
+      },
+      {
+        "feature": "play_pattern_From Throw In",
+        "gain": 2.4304752349853516,
+        "normalized_gain": 0.02055801769303626
+      },
+      {
+        "feature": "play_pattern_Regular Play",
+        "gain": 1.7514134645462036,
+        "normalized_gain": 0.014814217595671076
+      },
+      {
+        "feature": "play_pattern_From Free Kick",
+        "gain": 1.482954740524292,
+        "normalized_gain": 0.012543476829071304
+      },
+      {
+        "feature": "shot_type_Free Kick",
+        "gain": 0.20145797729492188,
+        "normalized_gain": 0.0017040192806808262
+      }
+    ]
+  },
+  "production": {
+    "training_rows": 5545,
+    "model_format": "XGBoost native JSON",
+    "temperature": 1.0,
+    "temperature_source": "fixed validation decision",
+    "evaluation_use": "none; full-data artifact is for future inference only",
+    "xgboost_version": "3.4.1"
+  },
+  "product_cohort": {
+    "shots_preserved": 916,
+    "shots_scored": 908,
+    "players_profiled": 179
+  }
+}
