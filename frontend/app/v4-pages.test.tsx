@@ -140,7 +140,7 @@ describe("V4 production pages", () => {
     mocks.getScoutingRecommendations.mockResolvedValue(recommendations);
     render(await ScoutingPage({ searchParams: Promise.resolve({ role: "FWD" }) }));
 
-    expect(screen.getByRole("heading", { name: "Scouting Recommendation Engine" })).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Scouting Recommendation System" })).toBeTruthy();
     expect(screen.getByText("Jae-Sung Lee")).toBeTruthy();
     expect(screen.getByText("0.650")).toBeTruthy();
     expect(screen.getByText("Limited contributor diversity across three forwards.")).toBeTruthy();

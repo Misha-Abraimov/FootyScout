@@ -8,7 +8,7 @@ import { api } from "@/lib/api";
 import { cx } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Scouting Recommendation Engine" };
+export const metadata: Metadata = { title: "Scouting Recommendation System" };
 const roles = ["DEF", "MID", "FWD"] as const;
 
 export default async function ScoutingPage({ searchParams }: { searchParams: Promise<{ role?: string }> }) {
@@ -20,7 +20,7 @@ export default async function ScoutingPage({ searchParams }: { searchParams: Pro
   if (!recommendations) return <main className="mx-auto min-h-[70vh] max-w-7xl px-5 py-16 sm:px-8"><ErrorState /></main>;
   return (
     <main className="mx-auto min-h-screen max-w-7xl space-y-9 px-5 py-10 sm:px-8 sm:py-14">
-      <PageHeader eyebrow="Bayer Leverkusen" title="Scouting Recommendation Engine" description={recommendations.definition} />
+      <PageHeader eyebrow="Bayer Leverkusen" title="Scouting Recommendation System" description={recommendations.definition} />
       <p className="-mt-5 max-w-4xl text-sm leading-6 text-[var(--muted)]">External players in the current product sample have limited match coverage. Recommendations rank observed style fit and may change as additional matches are added. {recommendations.disclaimer}</p>
       <nav aria-label="Target role" className="flex flex-wrap gap-2">
         {roles.map((item) => <Link key={item} href={`/scouting?role=${item}`} aria-current={role === item ? "page" : undefined} className={cx("rounded-lg border px-5 py-2.5 text-sm font-semibold", role === item ? "border-[var(--accent)] bg-emerald-300/10 text-[var(--accent-strong)]" : "border-[var(--border)] bg-[var(--panel)] text-[var(--muted)] hover:text-white")}>{item}</Link>)}
