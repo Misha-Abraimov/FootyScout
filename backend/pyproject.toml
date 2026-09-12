@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "footyscout-backend"
 version = "0.1.0"
 description = "FastAPI backend and football analytics workspace for FootyScout"
-readme = { text = "FootyScout FastAPI backend and football analytics workspace.", content-type = "text/markdown" }
+readme = { text = "FootyScout FastAPI backend.", content-type = "text/plain" }
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "alembic>=1.14,<2.0",
