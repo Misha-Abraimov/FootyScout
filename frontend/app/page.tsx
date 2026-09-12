@@ -9,23 +9,29 @@ import { formatCount } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const flow = [
-  ["01", "Pass event", "Location, geometry, pressure and pass characteristics"],
-  ["02", "XGBoost xPass model", "The validation-selected production model, trained without outcome leakage"],
-  ["03", "Expected completion", "The probability that the attempt should be completed"],
-  ["04", "Actual vs expected", "Execution assessed relative to pass difficulty"],
-  ["05", "Player profile", "Season-level signals built from grouped OOF predictions"],
+  ["01", "Event data", "Passes, shots, carries, locations, pressure, and possession context"],
+  ["02", "Predictive models", "xPass and xG estimate pass difficulty and scoring likelihood"],
+  ["03", "Attacking value", "Possession-state models estimate the value created by player actions"],
+  ["04", "Player intelligence", "Position-aware profiles, percentiles, archetypes, and similar playing styles"],
+  ["05", "Team & role fit", "Team profiles and positional roles power scouting recommendations"],
 ];
 
 export default async function Home() {
   const result = await Promise.all([
       api.getMeta(),
-      api.getModel(),
+      api.getActionValueModel(),
+      api.getArchetypes(),
       api.getLeaderboard({ limit: 5 }),
     ]).catch(() => null);
   if (!result) {
     return <main className="mx-auto min-h-[70vh] max-w-7xl px-5 py-16 sm:px-8"><ErrorState /></main>;
   }
-  const [meta, model, leaderboard] = result;
+  const [meta, actionValueModel, archetypes, leaderboard] = result;
+  const roundedPossessionStates = Math.floor(actionValueModel.training_corpus.states / 1000) * 1000;
+  const styleProfileCount = archetypes.definitions.reduce(
+    (total, definition) => total + definition.player_count,
+    0,
+  );
   return (
       <main>
         <section className="data-grid border-b border-[var(--border)] px-5 py-16 sm:px-8 sm:py-24">
@@ -48,16 +54,16 @@ export default async function Home() {
               <Link href="/model" className="text-sm font-semibold text-[var(--accent-strong)] hover:underline">Read methodology →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <MetricCard label="Players" value={formatCount(meta.player_count)} note={`${formatCount(meta.reliable_player_count)} meet the overall sample threshold`} />
-              <MetricCard label="Passes" value={formatCount(model.dataset.pass_count)} note="Every pass has an out-of-fold expected probability" />
-              <MetricCard label="Teams" value={formatCount(meta.teams.length)} note="Across the available competition matches" />
-              <MetricCard label="OOF ROC-AUC" value={model.out_of_fold_metrics.roc_auc.toFixed(3)} note={`${model.oof_fold_count} grouped folds by match`} />
+              <MetricCard label="Players" value={formatCount(meta.player_count)} note="Player profiles across the available competition sample" />
+              <MetricCard label="Teams" value={formatCount(meta.teams.length)} note="Teams represented in the available Bundesliga event data" />
+              <MetricCard label="Possession states" value={`${formatCount(roundedPossessionStates)}+`} note="States evaluated for attacking-value estimation" />
+              <MetricCard label="Style profiles" value={formatCount(styleProfileCount)} note="Eligible outfield players with position-aware style profiles" />
             </div>
           </section>
 
           <section aria-labelledby="pipeline-heading">
-            <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">How xPass becomes a profile</p>
-            <h2 id="pipeline-heading" className="mt-2 text-2xl font-semibold">From one decision to a player signal</h2>
+            <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">How FootyScout builds scouting intelligence</p>
+            <h2 id="pipeline-heading" className="mt-2 text-2xl font-semibold">From event data to a focused shortlist</h2>
             <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] lg:grid-cols-5">
               {flow.map(([number, title, description], index) => (
                 <article key={title} className="relative bg-[var(--panel)] p-5">
@@ -79,12 +85,12 @@ export default async function Home() {
               <Link href="/teams/904" className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-6 transition-colors hover:bg-[var(--panel-raised)]">
                 <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Bayer Leverkusen</p>
                 <h3 className="mt-3 text-xl font-semibold">Explore Team Intelligence</h3>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Review the 34-match team profile and pooled DEF, MID, and FWD positional roles.</p>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Review Leverkusen&apos;s 34-match team profile and pooled DEF, MID, and FWD positional roles.</p>
               </Link>
               <Link href="/scouting" className="rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-6 transition-colors hover:bg-[var(--panel-raised)]">
                 <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Role Fit</p>
                 <h3 className="mt-3 text-xl font-semibold">Open Scouting Recommendations</h3>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Rank eligible external players by observed style distance to Leverkusen&apos;s positional roles.</p>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Rank eligible external players by observed playing-style distance to Leverkusen&apos;s positional roles.</p>
               </Link>
             </div>
           </section>
