@@ -27,7 +27,7 @@ export default async function Home() {
     return <main className="mx-auto min-h-[70vh] max-w-7xl px-5 py-16 sm:px-8"><ErrorState /></main>;
   }
   const [meta, actionValueModel, archetypes, leaderboard] = result;
-  const roundedPossessionStates = Math.floor(actionValueModel.training_corpus.states / 1000) * 1000;
+  const roundedEvents = Math.floor(actionValueModel.training_corpus.events / 1000) * 1000;
   const styleProfileCount = archetypes.definitions.reduce(
     (total, definition) => total + definition.player_count,
     0,
@@ -50,14 +50,14 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl space-y-20 px-5 py-14 sm:px-8 sm:py-20">
           <section aria-labelledby="overview-heading">
             <div className="mb-5 flex items-end justify-between gap-4">
-              <p id="overview-heading" className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Current dataset</p>
+              <p id="overview-heading" className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">FootyScout by the numbers</p>
               <Link href="/model" className="text-sm font-semibold text-[var(--accent-strong)] hover:underline">Read methodology →</Link>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <MetricCard label="Players" value={formatCount(meta.player_count)} note="Player profiles across the available competition sample" />
               <MetricCard label="Teams" value={formatCount(meta.teams.length)} note="Teams represented in the available Bundesliga event data" />
-              <MetricCard label="Game situations analyzed" value={`${formatCount(roundedPossessionStates)}+`} note="Game situations evaluated for attacking-impact estimation" />
-              <MetricCard label="Style profiles" value={formatCount(styleProfileCount)} note="Eligible outfield players with same-position comparison profiles" />
+              <MetricCard label="Events analyzed" value={`${formatCount(roundedEvents)}+`} note={`Across ${formatCount(actionValueModel.training_corpus.matches)} matches used to build FootyScout's analytics models`} />
+              <MetricCard label="Detailed player profiles" value={formatCount(styleProfileCount)} note="Eligible outfield players with same-position comparisons" />
             </div>
           </section>
 
