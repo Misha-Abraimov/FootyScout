@@ -134,7 +134,7 @@ describe("PlayerIntelligenceSection", () => {
     expect(screen.getByRole("heading", { name: "Direct Progressor" })).toBeTruthy();
     expect(screen.getByLabelText(/Progressive-pass rate: 0.80 standard deviations/)).toBeTruthy();
     expect(screen.getByLabelText(/Pass difficulty: -0.50 standard deviations/)).toBeTruthy();
-    expect(screen.getByText("Passing vs. expected")).toBeTruthy();
+    expect(screen.getByText("Actual vs. expected passing")).toBeTruthy();
     expect(screen.getByText(/not percentiles or ratings/)).toBeTruthy();
   });
 });

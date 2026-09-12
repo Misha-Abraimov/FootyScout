@@ -16,12 +16,12 @@ export function ExpectedVsActual({ player }: { player: PlayerProfileResponse }) 
           <p className="mt-2 text-xs text-[var(--muted)]">How difficult a pass was to complete.</p>
         </div>
         <div className="bg-emerald-300/[0.045] p-6">
-          <p className="text-sm text-[var(--muted)]">Passing vs. expected</p>
+          <p className="text-sm text-[var(--muted)]">Actual vs. expected passing</p>
           <p className="metric-tabular mt-3 text-4xl font-semibold text-[var(--accent-strong)]">{formatPercentagePoints(player.completion_above_expected_pp)}</p>
           <p className="metric-tabular mt-2 text-xs text-[var(--muted)]">{player.completions_above_expected > 0 ? "+" : ""}{player.completions_above_expected.toFixed(1)} completions vs model expectation</p>
         </div>
       </div>
-      <p className="border-t border-[var(--border)] px-6 py-4 text-sm leading-6 text-[var(--muted)]">Whether a player completed more or fewer passes than expected.</p>
+      <p className="border-t border-[var(--border)] px-6 py-4 text-sm leading-6 text-[var(--muted)]">Actual pass completion compared with the model&apos;s expected completion.</p>
     </section>
   );
 }

@@ -16,7 +16,7 @@ const sortOptions: Array<[PlayerSortField, string]> = [
   ["pass_attempts", "Pass attempts"],
   ["actual_completion_rate", "Actual completion"],
   ["expected_completion_rate", "Pass difficulty"],
-  ["completion_above_expected_pp", "Passing vs. expected"],
+  ["completion_above_expected_pp", "Actual vs. expected"],
   ["progressive_pass_rate", "Progressive-pass rate"],
   ["pressure_above_expected_pp", "Under-pressure above expected"],
   ["final_third_entries_per_100_passes", "Final-third entries / 100"],

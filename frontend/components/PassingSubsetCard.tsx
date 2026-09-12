@@ -25,7 +25,7 @@ export function PassingSubsetCard({
       <dl className="mt-7 grid grid-cols-3 gap-3">
         <div><dt className="text-xs text-[var(--muted)]">Actual</dt><dd className="metric-tabular mt-1 font-semibold">{formatPercent(actual)}</dd></div>
         <div><dt className="text-xs text-[var(--muted)]">Pass difficulty</dt><dd className="metric-tabular mt-1 font-semibold">{formatPercent(expected)}</dd></div>
-        <div><dt className="text-xs text-[var(--muted)]">Passing vs. expected</dt><dd className="metric-tabular mt-1 font-semibold text-[var(--accent-strong)]">{formatPercentagePoints(aboveExpected)}</dd></div>
+        <div><dt className="text-xs text-[var(--muted)]">Actual vs. expected passing</dt><dd className="metric-tabular mt-1 font-semibold text-[var(--accent-strong)]">{formatPercentagePoints(aboveExpected)}</dd></div>
       </dl>
       {!reliable ? <p className="mt-5 border-t border-[var(--border)] pt-4 text-xs text-amber-100/70">Limited sample — interpret this split cautiously.</p> : null}
     </article>

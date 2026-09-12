@@ -62,7 +62,7 @@ function ComparisonResults({ left, right, attacking, intelligence, sameGroup }: 
   const metrics: Array<[string, number | null, number | null, (value: number | null) => string]> = [
     ["Actual completion", left.actual_completion_rate, right.actual_completion_rate, formatPercent],
     ["Pass difficulty", left.expected_completion_rate, right.expected_completion_rate, formatPercent],
-    ["Passing vs. expected", left.completion_above_expected_pp, right.completion_above_expected_pp, formatPercentagePoints],
+    ["Actual vs. expected passing", left.completion_above_expected_pp, right.completion_above_expected_pp, formatPercentagePoints],
     ["Under-pressure above expected", left.pressure_above_expected_pp, right.pressure_above_expected_pp, formatPercentagePoints],
     ["Progressive above expected", left.progressive_above_expected_pp, right.progressive_above_expected_pp, formatPercentagePoints],
     ["Long-pass above expected", left.long_pass_above_expected_pp, right.long_pass_above_expected_pp, formatPercentagePoints],
@@ -143,7 +143,7 @@ export function PositionPercentiles({ left, right, sameGroup }: { left: PlayerIn
         {preferred.map((name) => {
           const first = leftByName.get(name);
           const second = rightByName.get(name);
-          const label = displayMetricLabel(first?.label ?? second?.label ?? name);
+          const label = displayMetricLabel(first?.label ?? second?.label ?? name, "table");
           return (
             <div key={name} className="grid grid-cols-[minmax(130px,1fr)_minmax(100px,0.7fr)_minmax(100px,0.7fr)] border-t border-[var(--border)] px-4 py-3 text-sm">
               <span>{label}</span>
