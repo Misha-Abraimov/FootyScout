@@ -334,4 +334,8 @@ npm.cmd run build
 
 Raw data, processed Parquet files, model binaries, plots, caches, and real `.env` files are ignored. This keeps the source repository small and avoids redistributing event data or environment-specific outputs. All production and research artifacts can be regenerated using the ordered pipeline above.
 
-No project `LICENSE` file is currently included. Choose a license before public release if you want other people to have explicit reuse rights; that choice does not replace StatsBomb's separate data terms.
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+This license does not replace StatsBomb's separate data terms.
