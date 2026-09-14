@@ -12,11 +12,11 @@ export const leaderboardLabels: Record<LeaderboardMetric, string> = {
   final_third_entries_per_100_passes: "Final-third entries / 100",
   expected_completion_rate: "Pass difficulty",
   progressive_pass_rate: "Progressive-pass rate",
-  attacking_value_per_100_actions: "Attacking impact / 100 actions",
-  pass_value_per_100_passes: "Pass value / 100 passes",
-  carry_value_per_100_carries: "Carry value / 100 carries",
-  progressive_value_per_100_actions: "Progressive value / 100 actions",
-  pressure_value_per_100_actions: "Pressure value / 100 actions",
+  attacking_value_per_100_actions: "Overall impact / 100 actions",
+  pass_value_per_100_passes: "Passing impact / 100 passes",
+  carry_value_per_100_carries: "Carrying impact / 100 carries",
+  progressive_value_per_100_actions: "Progressive-action impact / 100 actions",
+  pressure_value_per_100_actions: "Under-pressure impact / 100 actions",
 };
 
 export function formatLeaderboardValue(metric: LeaderboardMetric, value: number): string {

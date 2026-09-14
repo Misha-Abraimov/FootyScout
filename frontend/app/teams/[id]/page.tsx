@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { ErrorState } from "@/components/States";
 import { TeamRoleProfile } from "@/components/TeamRoleProfile";
 import { ApiError, api } from "@/lib/api";
-import { formatCount, formatDecimal, formatPercent } from "@/lib/format";
+import { formatCount, formatDecimal, formatPercent, formatSignedDecimal } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Team Intelligence" };
@@ -52,7 +52,7 @@ export default async function TeamIntelligencePage({ params }: { params: Promise
           <MetricCard label="Progressive-carry rate" value={formatPercent(team.metrics.progressive_carry_rate)} />
           <MetricCard label="Shots / match" value={formatDecimal(team.metrics.shots_per_match, 2)} />
           <MetricCard label="xG / shot" value={formatDecimal(team.metrics.xg_per_shot, 3)} />
-          <MetricCard label="Attacking impact / 100" value={formatDecimal(team.metrics.attacking_value_per_100_actions, 3)} />
+          <MetricCard label="Overall impact / 100 actions" value={formatSignedDecimal(team.metrics.attacking_value_per_100_actions, 3)} />
         </div>
         <p className="mt-4 text-xs leading-5 text-[var(--muted)]">Attacking and value metrics describe the observed sample. They are not inputs to Role Fit.</p>
       </section>

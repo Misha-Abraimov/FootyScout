@@ -6,7 +6,7 @@ import { ComparisonMetric } from "@/components/ComparisonMetric";
 import { PlayerAutocomplete } from "@/components/PlayerAutocomplete";
 import { ErrorState } from "@/components/States";
 import { api } from "@/lib/api";
-import { formatDecimal, formatPercent, formatPercentagePoints, formatPercentile } from "@/lib/format";
+import { formatDecimal, formatPercent, formatPercentagePoints, formatPercentile, formatSignedDecimal } from "@/lib/format";
 import { displayMetricLabel } from "@/lib/terminology";
 import type { ComparisonResponse, PlayerIdentity, PlayerIntelligenceResponse, PlayerProfileResponse, PlayerSummary } from "@/lib/types";
 
@@ -80,12 +80,12 @@ function ComparisonResults({ left, right, attacking, intelligence, sameGroup }: 
       {!sameGroup ? <p className="mt-3 text-xs text-amber-100/70">Cross-position comparison: interpret role-dependent metrics with care.</p> : null}
       <div className="mt-5 grid gap-3 lg:grid-cols-2">{metrics.map(([label, a, b, formatter]) => <ComparisonMetric key={label} label={label} left={a} right={b} format={formatter} />)}</div>
       {attacking.length === 2 ? <><h3 className="mt-10 text-lg font-semibold">Attacking impact</h3><div className="mt-4 grid gap-3 lg:grid-cols-2">{[
-        ["Action value / 100", attacking[0]?.attacking_value_per_100_actions ?? null, attacking[1]?.attacking_value_per_100_actions ?? null],
-        ["Pass value / 100", attacking[0]?.pass_value_per_100_passes ?? null, attacking[1]?.pass_value_per_100_passes ?? null],
-        ["Carry value / 100", attacking[0]?.carry_value_per_100_carries ?? null, attacking[1]?.carry_value_per_100_carries ?? null],
-        ["Progressive value / 100", attacking[0]?.progressive_value_per_100_actions ?? null, attacking[1]?.progressive_value_per_100_actions ?? null],
-        ["Pressure value / 100", attacking[0]?.pressure_value_per_100_actions ?? null, attacking[1]?.pressure_value_per_100_actions ?? null],
-      ].map(([label, a, b]) => <ComparisonMetric key={String(label)} label={String(label)} left={a as number | null} right={b as number | null} format={(value) => formatDecimal(value, 3)} />)}</div></> : null}
+        ["Overall impact / 100 actions", attacking[0]?.attacking_value_per_100_actions ?? null, attacking[1]?.attacking_value_per_100_actions ?? null],
+        ["Passing impact / 100 passes", attacking[0]?.pass_value_per_100_passes ?? null, attacking[1]?.pass_value_per_100_passes ?? null],
+        ["Carrying impact / 100 carries", attacking[0]?.carry_value_per_100_carries ?? null, attacking[1]?.carry_value_per_100_carries ?? null],
+        ["Progressive-action impact / 100 actions", attacking[0]?.progressive_value_per_100_actions ?? null, attacking[1]?.progressive_value_per_100_actions ?? null],
+        ["Under-pressure impact / 100 actions", attacking[0]?.pressure_value_per_100_actions ?? null, attacking[1]?.pressure_value_per_100_actions ?? null],
+      ].map(([label, a, b]) => <ComparisonMetric key={String(label)} label={String(label)} left={a as number | null} right={b as number | null} format={(value) => formatSignedDecimal(value, 3)} />)}</div></> : null}
       {intelligence.length === 2 && intelligence[0] && intelligence[1] ? (
         <>
           <ArchetypeComparison left={intelligence[0]} right={intelligence[1]} />

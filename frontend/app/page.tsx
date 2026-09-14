@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 const flow = [
   ["01", "Event data", "Passes, shots, carries, locations, pressure, and possession context"],
   ["02", "Predictive models", "xPass and xG estimate pass difficulty and scoring likelihood"],
-  ["03", "Attacking impact", "Game situations are analyzed to estimate the value created by player actions"],
+  ["03", "Attacking impact", "Game situations are analyzed to measure how much a pass or carry improves an attacking situation."],
   ["04", "Player intelligence", "Same-position comparison profiles, percentiles, archetypes, and similar playing styles"],
   ["05", "Team & role fit", "Team profiles and positional roles power scouting recommendations"],
 ];

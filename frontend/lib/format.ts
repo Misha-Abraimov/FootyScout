@@ -20,6 +20,12 @@ export function formatDecimal(value: number | null, digits = 1): string {
   return value === null ? "—" : value.toFixed(digits);
 }
 
+export function formatSignedDecimal(value: number | null, digits = 1): string {
+  if (value === null) return "—";
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(digits)}`;
+}
+
 export function formatPercentile(value: number | null): string {
   if (value === null) return "Unavailable";
   const rounded = Math.round(value);

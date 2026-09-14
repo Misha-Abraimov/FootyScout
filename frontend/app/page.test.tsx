@@ -76,6 +76,7 @@ describe("homepage", () => {
     ]) {
       expect(screen.getByRole("heading", { name: step })).toBeTruthy();
     }
+    expect(screen.getByText("Game situations are analyzed to measure how much a pass or carry improves an attacking situation.")).toBeTruthy();
     expect(screen.queryByText("How xPass becomes a profile")).toBeNull();
     expect(screen.queryByText("A transparent analytical base")).toBeNull();
     expect(screen.queryByText("From event data to a focused shortlist")).toBeNull();

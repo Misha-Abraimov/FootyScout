@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatDecimal, formatPercent, formatPercentagePoints, formatSimilarity } from "./format";
+import { formatDecimal, formatPercent, formatPercentagePoints, formatSignedDecimal, formatSimilarity } from "./format";
 
 describe("analytics formatting", () => {
   it("formats rates, percentage points, and similarity distinctly", () => {
@@ -14,5 +14,12 @@ describe("analytics formatting", () => {
     expect(formatPercent(null)).toBe("—");
     expect(formatPercentagePoints(null)).toBe("—");
     expect(formatDecimal(null)).toBe("—");
+    expect(formatSignedDecimal(null)).toBe("—");
+  });
+
+  it("makes positive decimal direction explicit without changing zero or negative values", () => {
+    expect(formatSignedDecimal(0.093, 3)).toBe("+0.093");
+    expect(formatSignedDecimal(-0.02, 3)).toBe("-0.020");
+    expect(formatSignedDecimal(0, 3)).toBe("0.000");
   });
 });
