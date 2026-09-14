@@ -21,7 +21,7 @@ describe("AttackingValueSection", () => {
   it("keeps passing, carrying, and total action value distinct", () => {
     render(<AttackingValueSection profile={profile} />);
     expect(screen.getByText("Attacking impact")).toBeTruthy();
-    expect(screen.getByText("How actions changed attacking danger")).toBeTruthy();
+    expect(screen.getByText("Impact of passes and carries")).toBeTruthy();
     expect(screen.getByText("Overall impact / 100 actions")).toBeTruthy();
     expect(screen.getByText("Passing impact / 100 passes")).toBeTruthy();
     expect(screen.getByText("Carrying impact / 100 carries")).toBeTruthy();

@@ -11,7 +11,7 @@ export function AttackingValueSection({ profile }: { profile: AttackingProfileRe
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-semibold tracking-[0.16em] text-[var(--accent)] uppercase">Attacking impact</p>
-          <h2 id="attacking-value-title" className="mt-2 text-2xl font-semibold">How actions changed attacking danger</h2>
+          <h2 id="attacking-value-title" className="mt-2 text-2xl font-semibold">Impact of passes and carries</h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)]">Measures how much each pass or carry changed the expected attacking value of a possession. Positive values improved the attack; negative values reduced it.</p>
         </div>
         <ReliabilityBadge reliable={profile.attacking_value_reliable} />
