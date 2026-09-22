@@ -65,5 +65,8 @@ describe("Attacking Impact methodology copy", () => {
     );
     expect(screen.getByText("defensive value is outside this model")).toBeTruthy();
     expect(screen.queryByText(/V2\.2/)).toBeNull();
+    expect(screen.getByRole("heading", { name: "Transformer results coming soon" })).toBeTruthy();
+    expect(screen.getByText("We recently benchmarked a PyTorch causal Transformer for possession-value prediction using possession history across 667,000+ game states. Full evaluation results and model comparisons will be added here soon.")).toBeTruthy();
+    expect(screen.getByText("The current production possession-value model remains XGBoost.")).toBeTruthy();
   });
 });
