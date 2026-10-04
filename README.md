@@ -2,7 +2,7 @@
 
 FootyScout is a football scouting and analytics platform that uses event-level match data to model pass difficulty, expected goals, attacking action value, player style, team roles, and scouting fit. Its production analytics are precomputed into reproducible Parquet/model artifacts, loaded into PostgreSQL, exposed through FastAPI, and presented in a responsive Next.js interface.
 
-FootyScout is an analytical scouting aid. It is not an LLM application, transfer-success predictor, or player-quality oracle.
+FootyScout is an analytical scouting aid, not a transfer-success predictor or player-quality oracle. Its grounded AI Scout interface explains and combines governed FootyScout analytics, curated methodology, and optional current public reporting without allowing an LLM to alter the underlying calculations.
 
 ## Features
 
@@ -36,6 +36,15 @@ FootyScout is an analytical scouting aid. It is not an LLM application, transfer
 - Scouting Recommendation Engine ranked only by same-position Role Fit
 - Visible player-sample and FWD contributor-diversity limitations
 
+### Grounded AI Scout
+
+- OpenAI `gpt-5-mini` structured planning followed by deterministic FootyScout tools
+- Curated methodology and optional bounded Exa current-web context
+- Immutable evidence ledger and source-aware answer synthesis
+- Deterministic citation, authority, and Role Fit language guardrails
+- LangGraph/LangChain orchestration with bounded retries, timeouts, and safe fallbacks
+- LangSmith and OpenTelemetry tracing plus token, cost, and latency accounting
+
 ## Architecture
 
 FootyScout serves precomputed analytics snapshots; the API does not train models during requests.
@@ -64,6 +73,9 @@ flowchart TD
     LOAD --> DB
     DB --> API[FastAPI]
     API --> UI[Next.js and React UI]
+    UI --> AI[AI Scout]
+    AI --> LG[Bounded LangGraph workflow]
+    LG --> API
 ```
 
 ## Analytics overview
@@ -84,9 +96,37 @@ Player style uses position-relative passing and carrying dimensions. Production 
 
 Leverkusen's DEF, MID, and FWD role vectors pool the observed events/actions of players assigned to each frozen broad position. A player and the matching role share the same V3.3B six-dimensional position-relative coordinate system. Role Fit is RMS distance between those vectors; lower is closer. Current Leverkusen players use leave-self-out roles, while external recommendations use the full role. Sample support, archetype, and performance metrics never change Role Fit or ranking.
 
+Role Fit responses also include an empirical cohort rank. Comparable rows must share the same target team, broad position, calculation scope, and target-team-player status. Rows are ordered by ascending raw Role Fit distance, then ascending `player_id` for deterministic ties. External full-target-role candidates are therefore never mixed with leave-self-out current-team players. This rank describes relative stylistic resemblance only; it is not a player-quality or transfer-success ranking.
+
+### AI Scout request path
+
+```text
+User question
+  -> bounded LangGraph workflow
+  -> provider-neutral structured planner
+  -> deterministic FootyScout analytics tools
+  -> curated methodology
+  -> optional Exa current-web context
+  -> immutable evidence ledger
+  -> LangChain/OpenAI structured synthesis
+  -> deterministic grounding guardrails
+  -> balanced production policy
+  -> grounded answer
+```
+
+The public endpoint is synchronous. Planner, synthesis, and web-provider calls retain their configured timeouts and bounded retries. Vercel Services allows the backend invocation up to 120 seconds; no background job or polling system is introduced in this phase.
+
+### AI Scout evaluation and observability
+
+AI Scout is governed by the versioned 85-case `ai-scout-golden-v2` regression set. The evaluation framework measures deterministic planning, entity resolution, tool use, methodology and web routing, evidence categories, citations, and unsupported claims. It also includes separately calibrated LLM-as-a-judge infrastructure; judge results are not used as the official deterministic pass rate.
+
+The canonical final full-suite run (`eval-20261004T184153Z-0857a20d`) achieved **83/85 (97.6%)** deterministic passes, **100% citation validity**, **108/108** valid citation references, **0/51** unsupported-claim violations, and **0/19** forbidden-tool violations. It used 554,414 product LLM tokens, including 173,133 planner tokens, at an estimated cost of **$0.2884926**. Local-run latency was 11.873 seconds p50 and 23.558 seconds p95, with planner p95 of 7.047 seconds; these measurements are benchmark observations, not a hosted-service SLA. Later standalone verification of the two failed cases does not replace the official 83/85 full-suite result.
+
+Compared with the frozen pre-optimization baseline, that run reduced estimated LLM cost by 23.4%, median latency by 28.7%, total p95 latency by 16.9%, planner p95 latency by 45.6%, and planner tokens by 21.4%. Runtime telemetry records stage timings, token usage, versioned price estimates, retries, terminal states, and partial-coverage semantics without persisting secrets or raw provider requests.
+
 ## Data scope and interpretation
 
-The product cohort uses available StatsBomb 2023/24 Bundesliga event data. Bayer Leverkusen has all 34 league matches in the current sample; every other Bundesliga club is represented only by its two matches against Leverkusen. Consequently, production full-season Team Intelligence is currently available only for Leverkusen, and many external player profiles reflect one or two observed matches.
+The analytics-modeling corpus covers more than 823,000 event records across 233 matches. The product cohort is narrower and uses available StatsBomb 2023/24 Bundesliga event data: Bayer Leverkusen has all 34 league matches in the current sample, while every other Bundesliga club is represented only by its two matches against Leverkusen. Consequently, production full-season Team Intelligence is currently available only for Leverkusen, and many external player profiles reflect one or two observed matches.
 
 FootyScout surfaces that support explicitly. Role Fit and Scouting Recommendations describe observed style resemblance. They do not predict transfer success, future performance, coaching intent, causal tactical compatibility, or player quality.
 
@@ -99,6 +139,8 @@ Source match data comes from [StatsBomb Open Data](https://github.com/hudl/open-
 | Frontend | TypeScript, React 19, Next.js 16, Tailwind CSS 4, Campos |
 | Backend | Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 16 |
 | Analytics and ML | pandas, NumPy, SciPy, scikit-learn, XGBoost, PyTorch |
+| AI and retrieval | OpenAI, LangGraph, LangChain, structured tool calling, Exa current-web search |
+| Observability and evaluation | LangSmith, OpenTelemetry, deterministic golden-set evaluation, focused LLM judges |
 | Infrastructure and testing | Docker Compose, pytest, Ruff, Vitest, Testing Library, ESLint |
 
 PyTorch remains meaningful as the evaluated xPass MLP benchmark; XGBoost is the selected production family for xPass and xG.
@@ -180,7 +222,7 @@ normally `http://localhost:8000`.
 The production backend dependency set intentionally contains only the FastAPI,
 database, migration, and server packages needed to serve precomputed results. Use
 the `analytics` extra for local analytics and model rebuilds. Four small, frozen,
-API-facing metadata snapshots are packaged under `backend/app/runtime_metadata/`.
+API-facing metadata snapshots and the versioned AI pricing registry are packaged under `backend/app/runtime_metadata/`.
 Large Parquet datasets and model artifacts remain ignored and are not part of
 the serverless bundle.
 
@@ -198,6 +240,14 @@ the serverless bundle.
    same-origin, so no wildcard CORS setting is required; if an additional external
    browser origin must call the API, set `CORS_ORIGINS` to an explicit JSON list of
    trusted origins.
+   Configure the AI Scout provider keys and set `AI_SCOUT_PROVIDER=openai`,
+   `AI_SCOUT_OPENAI_MODEL=gpt-5-mini`,
+   `AI_SCOUT_OPENAI_PLANNER_REASONING_EFFORT=low`,
+   `AI_SCOUT_SYNTHESIS_MODEL=gpt-5-mini`, `AI_SCOUT_WEB_SEARCH_ENABLED=true`,
+   `AI_SCOUT_WEB_SEARCH_PROVIDER=exa`, and `AI_SCOUT_VALIDATION_MODE=balanced` for
+   the production service. Keep `AI_SCOUT_VALIDATION_MODE=strict` for evaluation,
+   regression, and local fail-closed validation runs. The application-code default and
+   checked-in `.env.example` intentionally remain `strict`.
 5. Leave `NEXT_PUBLIC_API_URL` unset in Vercel. Production server rendering uses
    Vercel's canonical `VERCEL_PROJECT_PRODUCTION_URL`; `VERCEL_URL` remains a
    fallback for other deployment environments.
@@ -290,12 +340,14 @@ footyscout/
 | `/model/action-value` | State/action-value evaluation and methodology |
 | `/teams/[id]` | Team Intelligence and positional roles |
 | `/scouting` | Leverkusen Scouting Recommendation Engine |
+| `/ai-scout` | Grounded AI Scout question-and-answer experience |
 
 Major API routes include:
 
 - `GET /health`
 - `GET /api/players`
 - `GET /api/players/{id}`
+- `POST /api/ai-scout`
 - `GET /api/players/{id}/passes`
 - `GET /api/players/{id}/shooting`
 - `GET /api/players/{id}/attacking`

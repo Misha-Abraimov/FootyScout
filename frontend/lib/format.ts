@@ -42,6 +42,25 @@ export function humanizeField(value: string): string {
     .replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
+const metricLabels: Record<string, string> = {
+  role_distance: "Role Fit distance",
+  positive_forward_distance_per_100_passes: "Forward distance per 100 passes",
+  average_forward_distance: "Average forward distance per pass",
+  carry_share_of_actions: "Carry involvement",
+  actual_completion_rate: "Actual pass completion",
+  expected_completion_rate: "Expected completion rate",
+  completion_above_expected_pp: "Actual vs. expected passing",
+  pressure_pass_rate: "Passes under pressure",
+  progressive_pass_rate: "Progressive passing rate",
+  long_pass_rate: "Long-pass rate",
+  attacking_value: "Attacking impact",
+  similarity_score: "Style similarity",
+};
+
+export function metricLabel(value: string): string {
+  return metricLabels[value] ?? humanizeField(value);
+}
+
 export function cx(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(" ");
 }

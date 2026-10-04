@@ -1,7 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { buildApiUrl, resolveApiBaseUrl } from "./api";
+import { api, buildApiUrl, resolveApiBaseUrl } from "./api";
 import { buildPassFilterQuery } from "./pass-filters";
+
+afterEach(() => vi.unstubAllGlobals());
 
 describe("API URL construction", () => {
   it("encodes query values and skips missing ones", () => {
@@ -64,5 +66,35 @@ describe("API URL construction", () => {
     expect(url).toContain(expectedParameter);
     expect(url).toContain("limit=200");
     expect(url).toContain("offset=0");
+  });
+});
+
+describe("AI Scout client", () => {
+  it("posts one JSON question through the typed API client", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        run_id: "run",
+        status: "answered",
+        answer_markdown: "Answer",
+        evidence_ids: [],
+        methodology_sources: [],
+        web_sources: [],
+        sources: [],
+        limitations: [],
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await api.askAIScout("Explain Role Fit.");
+
+    expect(result.status).toBe("answered");
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("http://localhost:8000/api/ai-scout");
+    expect(init).toMatchObject({
+      method: "POST",
+      body: JSON.stringify({ question: "Explain Role Fit." }),
+    });
   });
 });

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { cx } from "@/lib/format";
 
 const links = [
+  { href: "/ai-scout", label: "AI Scout" },
   { href: "/players", label: "Players" },
   { href: "/teams/904", label: "Team Intelligence" },
   { href: "/scouting", label: "Scouting" },

@@ -121,6 +121,9 @@ def player_role_fit_response(
     fit: PlayerRoleFit | None,
     target_team_id: int,
     target_team_name: str,
+    *,
+    cohort_rank: int | None = None,
+    cohort_size: int = 0,
 ) -> PlayerRoleFitResponse:
     if fit is None:
         if player.position_group == "GK":
@@ -132,6 +135,7 @@ def player_role_fit_response(
             target_team_id=target_team_id, target_team_name=target_team_name,
             position_group=player.position_group, is_target_team_player=False,
             calculation_scope=None, role_distance=None, closest_dimensions=[],
+            cohort_rank=None, cohort_size=0, ranking_interpretation=None,
             largest_difference=None, feature_gaps={}, distance_contributions={},
             player_matches_observed=player.matches_observed, sample_support=None,
             sample_support_message=None, role_matches_observed=None,
@@ -144,6 +148,13 @@ def player_role_fit_response(
         position_group=fit.position_group,
         is_target_team_player=fit.is_target_team_player,
         calculation_scope=fit.calculation_scope, role_distance=fit.role_distance,
+        cohort_rank=cohort_rank,
+        cohort_size=cohort_size,
+        ranking_interpretation=_role_fit_ranking_interpretation(
+            fit,
+            cohort_rank,
+            cohort_size,
+        ),
         closest_dimensions=[
             fit.closest_feature_1, fit.closest_feature_2, fit.closest_feature_3
         ],
@@ -159,6 +170,24 @@ def player_role_fit_response(
         role_support_message=fit.role_support_message,
         methodology_version=fit.methodology_version,
         interpretation=FIT_INTERPRETATION,
+    )
+
+
+def _role_fit_ranking_interpretation(
+    fit: PlayerRoleFit,
+    cohort_rank: int | None,
+    cohort_size: int,
+) -> str | None:
+    if cohort_rank is None or cohort_size < 1:
+        return None
+    cohort_label = (
+        f"current-team {fit.position_group} players using leave-self-out comparison"
+        if fit.is_target_team_player
+        else f"external {fit.position_group} candidates"
+    )
+    return (
+        f"Ranks #{cohort_rank} of {cohort_size} comparable {cohort_label} by "
+        "Role Fit distance; this describes stylistic resemblance, not player quality."
     )
 
 
@@ -190,7 +219,7 @@ def scouting_recommendations_response(
         limit=limit,
         items=[
             ScoutingRecommendationResponse(
-                rank=int(fit.recommendation_rank),
+                rank=rank,
                 player=player_identity(players[fit.player_id]),
                 role_distance=fit.role_distance,
                 closest_dimensions=[
@@ -202,6 +231,6 @@ def scouting_recommendations_response(
                 player_matches_observed=fit.player_matches_observed,
                 archetype_name=fit.archetype_name,
             )
-            for fit in fits
+            for rank, fit in enumerate(fits, start=1)
         ],
     )

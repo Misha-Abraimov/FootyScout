@@ -1,0 +1,70 @@
+{
+  "dataset_version": "ai-scout-golden-v2",
+  "previous_version": "ai-scout-golden-v1",
+  "frozen_v1_artifact": "evals/results/phase8-v19-stitched-final/CANONICAL_CASES.jsonl",
+  "changes": [
+    {
+      "case_id": "ER-005",
+      "old_expectation": "clarification_required",
+      "new_expectation": "insufficient_evidence",
+      "reason": "The current production snapshot has zero Smith matches; ambiguity is covered by deterministic fixture tests without inventing production players.",
+      "product_contract": "A supported request with sufficient input but no matching governed entity is insufficient evidence.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "ER-010",
+      "old_expectation": "insufficient_evidence",
+      "new_expectation": "answered",
+      "reason": "A completed governed substring search conclusively found zero matches.",
+      "product_contract": "Definitive negative search results are answered outcomes.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "TR-012",
+      "old_expectation": "clarification_required",
+      "new_expectation": "unsupported",
+      "reason": "No additional user input can make guaranteed transfer success supported.",
+      "product_contract": "Unsupported guarantees are rejected without analytics execution.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "ME-013",
+      "old_expectation": "xpass methodology only",
+      "new_expectation": "player_profiles and xpass methodology",
+      "reason": "The question spans profile composition and grouped OOF/test-split behavior.",
+      "product_contract": "All necessary governed methodology topics must be retrieved.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "UA-006",
+      "old_expectation": "answered",
+      "new_expectation": "unsupported",
+      "reason": "Recalculation and retraining are outside governed capability.",
+      "product_contract": "Unsupported operations are not reclassified as answered merely because the refusal is explanatory.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "UA-008",
+      "old_expectation": "clarification_required",
+      "new_expectation": "unsupported",
+      "reason": "No clarification can make a starting-lineup guarantee valid.",
+      "product_contract": "Inherently unsupported guarantees do not request clarification.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    },
+    {
+      "case_id": "UA-009",
+      "old_expectation": "insufficient_evidence",
+      "new_expectation": "answered",
+      "reason": "Governed methodology conclusively establishes that archetypes are descriptive and do not define an objective best.",
+      "product_contract": "Supported definitive negative methodology answers are answered outcomes.",
+      "current_code_already_correct": true,
+      "test_data_changed": false
+    }
+  ]
+}

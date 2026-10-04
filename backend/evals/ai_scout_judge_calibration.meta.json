@@ -1,0 +1,10 @@
+{
+  "dataset_version": "ai-scout-judge-calibration-v2",
+  "candidate_count": 49,
+  "human_approved_count": 49,
+  "development_count": 28,
+  "fresh_held_out_candidate_count": 21,
+  "fresh_held_out_human_approved_count": 21,
+  "previously_evaluated_count": 7,
+  "schema": "JudgeCalibrationExample"
+}

@@ -1,5 +1,6 @@
 import type {
   ActionValueModelInfoResponse,
+  AIScoutResponse,
   ArchetypeCatalogueResponse,
   AttackingActionListResponse,
   AttackingActionQuery,
@@ -126,7 +127,45 @@ async function apiFetch<T>(
   return (await response.json()) as T;
 }
 
+async function apiPost<TResponse, TRequest>(
+  path: string,
+  body: TRequest,
+  signal?: AbortSignal,
+): Promise<TResponse> {
+  const response = await fetch(buildApiUrl(path), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store",
+    signal,
+  });
+  if (!response.ok) {
+    let detail = `FootyScout API request failed (${response.status}).`;
+    try {
+      const responseBody: unknown = await response.json();
+      if (
+        typeof responseBody === "object" &&
+        responseBody !== null &&
+        "detail" in responseBody &&
+        typeof responseBody.detail === "string"
+      ) {
+        detail = responseBody.detail;
+      }
+    } catch {
+      // Keep the safe status-based message when an upstream body is not JSON.
+    }
+    throw new ApiError(detail, response.status);
+  }
+  return (await response.json()) as TResponse;
+}
+
 export const api = {
+  askAIScout: (question: string, signal?: AbortSignal) =>
+    apiPost<AIScoutResponse, { question: string }>(
+      "/api/ai-scout",
+      { question },
+      signal,
+    ),
   getMeta: () => apiFetch<MetaResponse>("/api/meta"),
   getModel: () => apiFetch<ModelInfoResponse>("/api/model"),
   getXGModel: () => apiFetch<XGModelInfoResponse>("/api/models/xg"),

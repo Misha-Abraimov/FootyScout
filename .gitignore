@@ -12,6 +12,8 @@ __pycache__/
 venv/
 .pytest_cache/
 .pytest_tmp*/
+.pytest-*/
+.tmp-tests/
 .mypy_cache/
 .ruff_cache/
 .cache/
@@ -19,6 +21,8 @@ venv/
 .coverage.*
 coverage.xml
 htmlcov/
+backend/evals/results/
+backend/evals/fresh-held-out-review.jsonl
 build/
 dist/
 
@@ -51,6 +55,10 @@ models/*
 *.onnx
 
 # Generated and editor files
+.agents/
+skills-lock.json
+FOOTYSCOUT_AI_ENGINEERING_STATE.md
+.tmp/
 .npm-cache/
 *.log
 *.tmp
@@ -59,3 +67,5 @@ models/*
 Thumbs.db
 .idea/
 .vscode/
+
+backend/.venv-broken/

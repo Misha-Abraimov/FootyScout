@@ -28,6 +28,7 @@ def test_vercel_services_and_routes_are_declared() -> None:
             "root": "backend/",
             "framework": "fastapi",
             "entrypoint": "app.main:app",
+            "maxDuration": 120,
         },
     }
     assert config["rewrites"] == [

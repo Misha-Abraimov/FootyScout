@@ -854,6 +854,9 @@ def test_external_and_leave_self_out_role_fit(client: TestClient) -> None:
     assert external["available"] is True
     assert external["calculation_scope"] == "full_target_role"
     assert external["role_distance"] == pytest.approx(0.39)
+    assert external["cohort_rank"] == 1
+    assert external["cohort_size"] == 1
+    assert "stylistic resemblance, not player quality" in external["ranking_interpretation"]
     assert external["sample_support"] == "limited"
     assert external["closest_dimensions"][0] == "progressive_pass_rate"
 
@@ -861,9 +864,13 @@ def test_external_and_leave_self_out_role_fit(client: TestClient) -> None:
     assert current["is_target_team_player"] is True
     assert current["calculation_scope"] == "leave_self_out_target_role"
     assert current["role_distance"] == pytest.approx(0.62)
+    assert current["cohort_rank"] == 1
+    assert current["cohort_size"] == 1
 
     unavailable = client.get("/api/players/2/role-fit").json()
     assert unavailable["available"] is False
+    assert unavailable["cohort_rank"] is None
+    assert unavailable["cohort_size"] == 0
     assert "50 passes and 29 carries" in unavailable["unavailable_reason"]
 
 
@@ -1031,6 +1038,7 @@ def test_openapi_generation_and_similarity_score_description(client: TestClient)
     assert "/api/archetypes" in schema["paths"]
     assert "/api/teams/{team_id}/intelligence" in schema["paths"]
     assert "/api/players/{player_id}/role-fit" in schema["paths"]
+    assert "/api/ai-scout" in schema["paths"]
     assert "/api/teams/{team_id}/roles/{position_group}/recommendations" in schema["paths"]
     similarity_score = schema["components"]["schemas"]["SimilarPlayerResponse"][
         "properties"

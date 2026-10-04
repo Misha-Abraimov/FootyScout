@@ -57,6 +57,9 @@ function fit(overrides: Partial<PlayerRoleFitResponse> = {}): PlayerRoleFitRespo
     is_target_team_player: false,
     calculation_scope: "full_target_role",
     role_distance: 0.39,
+    cohort_rank: 4,
+    cohort_size: 38,
+    ranking_interpretation: "Ranks #4 of 38 comparable external MID candidates by Role Fit distance; this describes stylistic resemblance, not player quality.",
     closest_dimensions: ["progressive_pass_rate", "carry_share_of_actions", "expected_completion_rate"],
     largest_difference: "long_pass_rate",
     feature_gaps: {},
@@ -93,13 +96,22 @@ describe("TeamRoleProfile", () => {
 });
 
 describe("PlayerRoleFitSection", () => {
-  it("renders raw distance, alignment, and limited sample separately", () => {
+  it("leads with cohort rank while retaining raw distance and limitations", () => {
     render(<PlayerRoleFitSection fit={fit()} />);
-    expect(screen.getByText("0.390")).toBeTruthy();
-    expect(screen.getByText(/lower is closer/i)).toBeTruthy();
+    expect(screen.getByText("#4 of 38")).toBeTruthy();
+    expect(screen.getByText("Comparable external midfield candidates")).toBeTruthy();
+    expect(screen.getByText("Raw distance: 0.390")).toBeTruthy();
+    expect(screen.getByText(/Lower distance means closer stylistic resemblance/)).toBeTruthy();
     expect(screen.getByText(/How closely a player's playing style matches this role/)).toBeTruthy();
     expect(screen.getByText("limited sample")).toBeTruthy();
-    expect(screen.getByText(/does not predict transfer success/)).toBeTruthy();
+    expect(screen.getByText(/does not predict player quality/)).toBeTruthy();
+    expect(screen.getByText("Progressive passing rate")).toBeTruthy();
+    expect(screen.getByText("Carry involvement")).toBeTruthy();
+    expect(screen.getByText("Long-pass rate")).toBeTruthy();
+    expect(document.body.textContent).not.toMatch(/\b(?:good|moderate|poor|strong|weak) fit\b/i);
+    const surface = screen.getByRole("region", { name: /MID role/ });
+    expect(surface.getAttribute("data-surface")).toBe("neutral");
+    expect(surface.className).not.toContain("bg-[var(--panel)]");
   });
 
   it("uses leave-self-out copy for a current Leverkusen player", () => {
@@ -108,7 +120,7 @@ describe("PlayerRoleFitSection", () => {
   });
 
   it("renders a clean unavailable state", () => {
-    render(<PlayerRoleFitSection fit={fit({ available: false, role_distance: null, unavailable_reason: "Requires 50 passes." })} />);
+    render(<PlayerRoleFitSection fit={fit({ available: false, role_distance: null, cohort_rank: null, cohort_size: 0, ranking_interpretation: null, unavailable_reason: "Requires 50 passes." })} />);
     expect(screen.getByText("Role Fit unavailable")).toBeTruthy();
     expect(screen.getByText("Requires 50 passes.")).toBeTruthy();
   });

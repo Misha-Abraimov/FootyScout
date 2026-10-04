@@ -1,0 +1,16 @@
+{
+  "dataset_version": "ai-scout-golden-v2",
+  "case_count": 85,
+  "source": "ai_scout_golden.jsonl",
+  "schema": "GoldenEvalCase",
+  "category_counts": {
+    "entity_resolution": 12,
+    "profile_comparison": 15,
+    "similarity_archetype": 11,
+    "team_role": 17,
+    "methodology": 15,
+    "unsupported_adversarial": 8,
+    "current_world": 5,
+    "mixed": 2
+  }
+}

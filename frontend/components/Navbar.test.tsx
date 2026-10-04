@@ -15,6 +15,7 @@ describe("Navbar", () => {
 
     expect(screen.getByText("FS")).toBeTruthy();
     expect(screen.getByText("FootyScout")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "AI Scout" }).getAttribute("href")).toBe("/ai-scout");
     expect(screen.queryByText("SL")).toBeNull();
   });
 });

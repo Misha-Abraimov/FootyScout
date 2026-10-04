@@ -734,6 +734,9 @@ export interface PlayerRoleFitResponse {
   is_target_team_player: boolean;
   calculation_scope: string | null;
   role_distance: number | null;
+  cohort_rank: number | null;
+  cohort_size: number;
+  ranking_interpretation: string | null;
   closest_dimensions: string[];
   largest_difference: string | null;
   feature_gaps: Record<string, number>;
@@ -772,4 +775,40 @@ export interface ScoutingRecommendationsResponse {
   total: number;
   limit: number;
   items: ScoutingRecommendation[];
+}
+
+export type AIScoutStatus =
+  | "answered"
+  | "clarification_required"
+  | "unsupported"
+  | "insufficient_evidence"
+  | "error";
+
+export interface AIScoutWebSource {
+  evidence_id: string;
+  title: string;
+  url: string;
+  domain: string;
+  published_at: string | null;
+  source_quality: string;
+}
+
+export interface AIScoutSource {
+  evidence_id: string;
+  category: "analytics" | "methodology" | "web";
+  label: string;
+  url: string | null;
+  domain: string | null;
+  published_at: string | null;
+}
+
+export interface AIScoutResponse {
+  run_id: string;
+  status: AIScoutStatus;
+  answer_markdown: string;
+  evidence_ids: string[];
+  methodology_sources: string[];
+  web_sources: AIScoutWebSource[];
+  sources: AIScoutSource[];
+  limitations: string[];
 }

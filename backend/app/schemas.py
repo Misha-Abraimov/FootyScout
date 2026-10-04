@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class ApiModel(BaseModel):
@@ -725,6 +725,9 @@ class PlayerRoleFitResponse(ApiModel):
     is_target_team_player: bool
     calculation_scope: str | None
     role_distance: float | None = Field(default=None, ge=0)
+    cohort_rank: int | None = Field(default=None, ge=1)
+    cohort_size: int = Field(ge=0)
+    ranking_interpretation: str | None
     closest_dimensions: list[str]
     largest_difference: str | None
     feature_gaps: dict[str, float]
@@ -763,3 +766,56 @@ class ScoutingRecommendationsResponse(ApiModel):
     total: int
     limit: int
     items: list[ScoutingRecommendationResponse]
+
+
+class AIScoutRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, extra="forbid")
+
+    question: str = Field(min_length=1, max_length=2000)
+
+    @field_validator("question")
+    @classmethod
+    def validate_question_text(cls, value: str) -> str:
+        """Reject unsafe control/surrogate code points while allowing normal prose."""
+        for character in value:
+            codepoint = ord(character)
+            if character in {"\t", "\n", "\r"}:
+                continue
+            if codepoint < 32 or 0x7F <= codepoint <= 0x9F or 0xD800 <= codepoint <= 0xDFFF:
+                raise ValueError("Question contains unsupported control characters.")
+        return value
+
+
+class AIScoutWebSourceResponse(ApiModel):
+    evidence_id: str
+    title: str
+    url: str
+    domain: str
+    published_at: str | None
+    source_quality: str
+
+
+class AIScoutSourceResponse(ApiModel):
+    evidence_id: str
+    category: Literal["analytics", "methodology", "web"]
+    label: str
+    url: str | None = None
+    domain: str | None = None
+    published_at: str | None = None
+
+
+class AIScoutResponse(ApiModel):
+    run_id: str
+    status: Literal[
+        "answered",
+        "clarification_required",
+        "unsupported",
+        "insufficient_evidence",
+        "error",
+    ]
+    answer_markdown: str
+    evidence_ids: list[str]
+    methodology_sources: list[str]
+    web_sources: list[AIScoutWebSourceResponse]
+    sources: list[AIScoutSourceResponse]
+    limitations: list[str]

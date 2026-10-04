@@ -1,0 +1,15 @@
+{
+  "version": "openai-2026-10-03",
+  "entries": [
+    {
+      "provider": "openai",
+      "model": "gpt-5-mini",
+      "effective_date": "2026-10-03",
+      "input_usd_per_million_tokens": 0.25,
+      "cached_input_usd_per_million_tokens": 0.025,
+      "output_usd_per_million_tokens": 2.0,
+      "units": "usd_per_million_tokens",
+      "source": "https://developers.openai.com/api/docs/models/gpt-5-mini"
+    }
+  ]
+}

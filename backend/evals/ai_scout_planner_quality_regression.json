@@ -1,0 +1,19 @@
+{
+  "baseline_run_id": "eval-20261004T160303Z-9a2cbc5c",
+  "failed_optimized_run_id": "eval-20261004T171415Z-6ab0571a",
+  "frozen": true,
+  "purpose": "Validate general planner semantic recovery after relaxing OpenAI reasoning effort from minimal to low.",
+  "case_ids": [
+    "ER-011",
+    "PC-003",
+    "PC-009",
+    "SA-006",
+    "SA-008",
+    "TR-002",
+    "TR-014",
+    "UA-003",
+    "TR-015",
+    "PC-004",
+    "UA-007"
+  ]
+}
